@@ -59,6 +59,7 @@ class bichinho():
   
   #tempoSC -->> tempo Sem Comer4
   
+  # TEMOS UM PROBLEMA AQUI ENVOLVENDO O BD
   def getFome(self):
     tempoSC = horasEmSegundos() - self.ultimaAlimentacao
     fome = tempoSC // 5
