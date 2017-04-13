@@ -9,19 +9,29 @@ def iniciarBD ():
     BDTamagushy.conectarBD()
     
     if(not BDTamagushy.tabela_existe("dados")):
-        print("Banco de dados não existe")
+        print("Banco de dados não existe.")
+        print("Criando banco de dados...")
+        print()
         BDTamagushy.criarBD()
 
         global animal
-        nome = input("Digite o nome do seu bichinho")
+        nome = input("Digite o nome do seu bichinho: ")
         animal = bichinho(nome, 0, 100, 100)
         return
 
     dadosT = BDTamagushy.ler_todos_clientes()
     linha = len(dadosT) - 1
-    print(dadosT[linha])
-
     animal = bichinho(dadosT[linha][0], dadosT[linha][1], dadosT[linha][2], dadosT[linha][3])
+
+    print("Tamagushy encontrado!")
+    print()
+    print("--------------------")
+    print("Seu Nome:",animal.getNome())
+    print("Sua Saúde:",animal.getSaude())
+    print("Fome:",animal.getFome())
+    print("Sua Idade:",animal.getIdade())
+    print("--------------------")
+    print()
     
 
 class bichinho():  
@@ -76,10 +86,14 @@ class bichinho():
     self.ultimaMedicacao = horasEmSegundos()
     return self.saude
 def Ver():
+  print()
+  print("--------------------")
   print("Seu Nome:",animal.getNome())
   print("Sua Saúde:",animal.getSaude())
   print("Fome:",animal.getFome())
-  print("Sua Idade",animal.getIdade())    
+  print("Sua Idade:",animal.getIdade())
+  print("--------------------")
+  print()
 
 def horasEmSegundos():
   horario = ((time.localtime().tm_hour - 3) * 3600) + (time.localtime().tm_min * 60) + time.localtime().tm_sec
@@ -96,21 +110,21 @@ def main ():
     while(continuar):
 
       horasEmSegundos()
-      print("Opções:\n 1-Alterar Nome \n 2-Dar comida \n 3-Dar remédio \n 4-Ver informações ")
-      escolha = int(input("Digite o número da opção que você deseja fazer com seu tamagushi:"))
+      print("Opções:\n 1-Alterar Nome \n 2-Dar comida \n 3-Dar remédio \n 4-Ver informações \n 5-Sair e salvar informações")
+      escolha = int(input("Digite o número da opção que você deseja fazer com seu tamagushi: "))
       
       if(escolha == 1):
-        n = input("Digite o novo nome do seu bichinho:")
+        n = input("Digite o novo nome do seu bichinho: ")
         animal.setNome(n)
       
       elif(escolha ==  2):
-        Qcomida = float(input("Digite quantas comidas você vai dar a seu bichinho:"))
+        Qcomida = float(input("Digite quantas comidas você vai dar a seu bichinho: "))
         f = Qcomida
         
         animal.setFome(f)
          
       elif(escolha == 3):
-        Qremedio = int(input("Digite quantas pilulas você vai dar a seu bichinho:"))
+        Qremedio = int(input("Digite quantas pilulas você vai dar a seu bichinho: "))
         s = animal.getSaude()
         s = s + Qremedio
         print(s)
@@ -120,14 +134,19 @@ def main ():
         Ver()
 
       elif(escolha == 5):
-          print("Volte Sempre")
+          print()
+          print("Volte Sempre!")
           
           continuar = False
 
           BDTamagushy.adicionarInformacoes(animal.getNome(), animal.getIdade(), animal.getFome(), animal.getSaude())
 
+          input("Aperte ENTER para finalizar...")
+
       else:
-          print("Tente Novamente")
+          print()
+          print("Tente Novamente.")
+          print()
 
 
     
