@@ -1,6 +1,8 @@
 import pygame
 import random
 import bichinho2_1
+import InterfaceTamagushy
+
 #Algumas variaveis
 clock = pygame.time.Clock()
 bichinhos = []
@@ -10,9 +12,12 @@ ajudas = []
 #Textos
 pygame.font.init()
 fontePadrao = pygame.font.SysFont("Segoe Script",25)
+fonteTitulo = pygame.font.SysFont("Segoe Script", 90)
 textoBt1 = fontePadrao.render("Novo Jogo", 1, (0,0,0))
 textoBt2 = fontePadrao.render("Continuar", 1, (0,0,0))
 textoBt3 = fontePadrao.render("Sair", 1, (0,0,0))
+nomeJogo = fonteTitulo.render("Tamagushy",1 ,(0,0,0))
+
 
 #Tamanho dos textos
 txt1Width = textoBt1.get_width()
@@ -23,6 +28,9 @@ txt2Height = textoBt2.get_height()
 
 txt3Width = textoBt3.get_width()
 txt3Height = textoBt3.get_height()
+
+nomeJogoWidth = nomeJogo.get_width()
+nomeJogoHeight = nomeJogo.get_height()
 
 
 
@@ -72,6 +80,7 @@ class menu ():
         Bheight = 100
 
         corB = RGBrandom()
+        corO = RGBrandom()
 
         while (continuar):
 
@@ -85,7 +94,11 @@ class menu ():
                     if (posicao[0] >= 350 and posicao[0] <= 500):
                         #Selecionando o botao
                         if(posicao[1] >= 150 and posicao[1] <= 200):
-                            print("oi")
+                            print("Chegou aqui")
+
+                            continuar = False
+
+
 
                         elif(posicao[1] >= 250 and posicao[1] <= 300):
                             print("Tudo")
@@ -119,7 +132,7 @@ class menu ():
             x += vx
             y += vy
 
-            bichinho2_1.bixo(x, y, Bwidth, Bheight, corB, self.tela, rosto)
+            bichinho2_1.bixo(x, y, Bwidth, Bheight, corB, corO, self.tela, rosto)
 
 
             #Butoes
@@ -135,6 +148,8 @@ class menu ():
             self.bt3 = pygame.draw.rect(self.tela, cores["vermelho"],[300,350,200,50])
             self.tela.blit(textoBt3, (300 + 200 // 2 - txt3Width // 2, 350 + 50 // 2 - txt3Height // 2))
 
+            self.tela.blit(nomeJogo, (800 / 2 - nomeJogoWidth // 2, 150/2 - nomeJogoHeight //2))
+
 
 
 
@@ -143,4 +158,7 @@ class menu ():
         quit()
 
 
+
+InterfaceTamagushy.executar()
 m = menu()
+
