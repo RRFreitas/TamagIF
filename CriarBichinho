@@ -1,9 +1,0 @@
-import pygame
-bicho = []
-def bichinho (x,y,corB,corO,superficie):
-
-    b = pygame.draw.circle(superficie,corB,(x,y),50)
-    olhod = pygame.draw.circle(superficie,corO,(x + 19,y - 10),10)
-    olhoe = pygame.draw.circle(superficie,corO,(x - 18,y - 10),10)
-    bicho.append((b,olhod,olhoe))
-    return bicho
