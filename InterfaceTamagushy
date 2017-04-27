@@ -7,6 +7,9 @@ bichinhos = []
 criar = True
 ajudas = []
 
+#Imagens
+rosto = pygame.image.load("imagens/oie_transparent (1).png")
+
 
 # Cores:
 cores = {}
@@ -14,11 +17,17 @@ cores["preto"] = (0,0,0)
 cores["vermelho"] = (247,17,0)
 cores["aquamarine"] = (127,255,212)
 
-
+# Cores:
+def RGBrandom ():
+    r = random.randint(1,255)
+    g = random.randint(1,255)
+    b = random.randint(1,255)
+    
+    return (r,g,b)
+    
 #Imagens
 imagemMenuFundo = pygame.image.load("imagens/FundoMenu6.jpg")
 bichinho = pygame.image.load("imagens/oie_transparent.png")
-                        
 
 class menu ():
 
@@ -31,9 +40,19 @@ class menu ():
         
         #outtras configuraçoes
 
-    def opcoes (self):
+    
         continuar = True
         print("tudo")
+
+        vx = 3
+        vy = 2
+
+        x = 400
+        y = 300
+
+        corB = RGBrandom()
+        corO = RGBrandom()
+        
         while (continuar):
             for event in pygame.event.get():
                 if (event.type == pygame.QUIT):
@@ -41,50 +60,22 @@ class menu ():
                     continuar = False
             self.tela.fill((255,255,255))
             global criar
-
-            if (criar):
-                for n in range(0,50):
-                    #Posição
-                    x = random.randint(1,800)
-                    y = random.randint(1,600)
-                    #cor
-                    print(cores.values())
-                    coresRGB= list(cores.values())
-                    cor = random.randint(0,len(coresRGB) - 1)
-                    corBichinho = coresRGB[cor]
-                        
-
-                    cor = random.randint(0,len(coresRGB) - 1)
-                    corOlho = coresRGB[cor]
-                        
-                            
-                    #Salvando configuraçoes e criando bichinhos
-                            
-                        
-                    bicho = bichinho2_1.bichinho(x,y,corBichinho,corOlho,self.tela)
-                    ajuda = (x,y,corBichinho,corOlho,self.tela)
-                    bichinhos.append(bicho)
-                    ajudas.append(ajuda)
-                criar = False
             
-            else:
-                contador = 0
-                n = 0
-                for t in range(0,50):
-                    for informacoes in bichinhos:
-                        bicho = ajudas[contador]
-                        z = bicho[0] + 1
-                        c = bicho[1] + 1
-                           
-                        if (x < 0 or x > 800 or y < 0 or y > 600):
-                            bichinhos.remove(informacoes)
-                            
-                    print("deu certo")
-                    contador  = contador + 1
+            if (x < 50 or x > 750 ):
+                vx = -vx
+                corB = RGBrandom()
+                corO = RGBrandom()
+            if (y < 50 or y > 550):
+                vy = -vy
+                corB = RGBrandom()
+                corO = RGBrandom()
+            
+            x += vx
+            y += vy
+    
+            bichinho2_1.bichinho(x,y,corB, corO, self.tela, 150, 100)
 
-                        
-                    bichinho2_1.bichinho(z + contador,c+ contador,bicho[2],bicho[3],bicho[4])
-
+            
 
 
             print("oi")
@@ -96,10 +87,11 @@ class menu ():
 
 
             pygame.display.update()
-            clock.tick(1)
+            clock.tick(60)
         quit()
 
         
 a = menu()        
 a.opcoes
+
 
