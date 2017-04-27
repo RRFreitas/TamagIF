@@ -72,7 +72,6 @@ class menu ():
         Bheight = 100
 
         corB = RGBrandom()
-        corO = RGBrandom()
 
         while (continuar):
 
@@ -120,7 +119,7 @@ class menu ():
             x += vx
             y += vy
 
-            bichinho2_1.bixo(x, y, Bwidth, Bheight, corB, corO, self.tela, rosto)
+            bichinho2_1.bixo(x, y, Bwidth, Bheight, corB, self.tela, rosto)
 
 
             #Butoes
