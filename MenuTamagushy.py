@@ -19,7 +19,7 @@ textoBt3 = fontePadrao.render("Sair", 1, (0,0,0))
 nomeJogo = fonteTitulo.render("Tamagushy",1 ,(0,0,0))
 
 
-#Tamanho dos textos
+#Tamanho dos textos em pixels
 txt1Width = textoBt1.get_width()
 txt1Height = textoBt1.get_height()
 
@@ -40,7 +40,7 @@ cores["preto"] = (0,0,0)
 cores["vermelho"] = (247,17,0)
 cores["aquamarine"] = (127,255,212)
 
-# Cores:
+# Cor aleatória:
 def RGBrandom ():
     r = random.randint(1,255)
     g = random.randint(1,255)
@@ -49,10 +49,7 @@ def RGBrandom ():
     return (r,g,b)
 
 #Imagens
-#Imagens
 rosto = pygame.image.load("imagens/rosto.png")
-colorkey = rosto.get_at((0,0))
-rosto.set_colorkey(colorkey)
 fundoMenu = pygame.image.load("imagens/Teste2.png")
 
 class menu ():
@@ -70,8 +67,8 @@ class menu ():
         continuar = True
         print("tudo")
 
-        vx = 3
-        vy = 2
+        vx = 5
+        vy = 3
 
         x = 400
         y = 300
@@ -96,22 +93,14 @@ class menu ():
                         if(posicao[1] >= 150 and posicao[1] <= 200):
                             print("Chegou aqui")
 
-                            continuar = False
-
-
-
                         elif(posicao[1] >= 250 and posicao[1] <= 300):
                             print("Tudo")
 
                         elif (posicao[1] >= 350 and posicao[1] <= 400):
                             print("bom")
+                            continuar = False
 
-
-
-
-
-
-
+                            
 
 
             self.tela.blit(fundoMenu,(0,0))
@@ -132,7 +121,7 @@ class menu ():
             x += vx
             y += vy
 
-            bichinho2_1.bixo(x, y, Bwidth, Bheight, corB, corO, self.tela, rosto)
+            bichinho2_1.bixo(x, y, Bwidth, Bheight, corB, self.tela, rosto)
 
 
             #Butoes
@@ -159,6 +148,5 @@ class menu ():
 
 
 
-InterfaceTamagushy.executar()
+#InterfaceTamagushy.executar()
 m = menu()
-
