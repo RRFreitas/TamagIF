@@ -1,7 +1,13 @@
 import pygame
 import random
 import bichinho2_1
-import InterfaceTamagushy
+import interfaceT
+import novoJogo
+
+# Tela Principal
+
+
+
 
 #Algumas variaveis
 clock = pygame.time.Clock()
@@ -39,6 +45,9 @@ cores = {}
 cores["preto"] = (0,0,0)
 cores["vermelho"] = (247,17,0)
 cores["aquamarine"] = (127,255,212)
+cores["red"] = (255,0,0)
+cores["green"] = (0,255,0)
+cores["blue"] = (0,0,255)
 
 # Cor aleatória:
 def RGBrandom ():
@@ -83,6 +92,9 @@ class menu ():
 
             #Detectar evento
             for event in pygame.event.get():
+                print(event)
+
+
                 if (event.type == pygame.QUIT ):
                     continuar = False
 
@@ -91,16 +103,16 @@ class menu ():
                     if (posicao[0] >= 350 and posicao[0] <= 500):
                         #Selecionando o botao
                         if(posicao[1] >= 150 and posicao[1] <= 200):
-                            print("Chegou aqui")
+                            novoJogo.newGAme(self.tela,fontePadrao,cores,rosto)
 
                         elif(posicao[1] >= 250 and posicao[1] <= 300):
-                            print("Tudo")
+                            interfaceT.janelaPrincipal(self.tela)
 
                         elif (posicao[1] >= 350 and posicao[1] <= 400):
                             print("bom")
                             continuar = False
 
-                            
+
 
 
             self.tela.blit(fundoMenu,(0,0))
@@ -149,4 +161,4 @@ class menu ():
 
 
 #InterfaceTamagushy.executar()
-m = menu()
+interface = menu()
