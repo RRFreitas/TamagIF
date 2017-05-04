@@ -1,10 +1,10 @@
 import pygame
 import bichinho2_1
-import codigoPrincipal
-from MenuTamagushy import *
+
 
 fundoPrincipal = pygame.image.load("imagens/FundoPrincipal_azulClaro.png")
 clock = pygame.time.Clock()
+escolha = None
 
 def janelaPrincipal(tela,rosto):
     clock = pygame.time.Clock()
@@ -16,8 +16,10 @@ def janelaPrincipal(tela,rosto):
         # Verificando Eventos
         for event in pygame.event.get():
             if (event.type == pygame.QUIT):
+                sair = True
                 continuar = False
-                escolha = 5
+
+
 
             elif (event.type == pygame.MOUSEBUTTONDOWN):
                 x = pygame.mouse.get_pos()[0]
@@ -51,4 +53,6 @@ def janelaPrincipal(tela,rosto):
 
         pygame.display.update()
         clock.tick(60)
+    if (sair):
+        escolha = 5
     return escolha
