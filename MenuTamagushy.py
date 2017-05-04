@@ -1,10 +1,14 @@
 import pygame
 import random
 import bichinho2_1
-import interfaceT
-import novoJogo
+import interface
+import newTamagushy
+from codigoPrincipal import *
+
 
 # Tela Principal
+
+
 
 
 
@@ -61,104 +65,113 @@ def RGBrandom ():
 rosto = pygame.image.load("imagens/rosto.png")
 fundoMenu = pygame.image.load("imagens/Teste2.png")
 
-class menu ():
-
-    def __init__ (self):
-        pygame.init()
-        pygame.display.set_caption("Tamagushy")
-        self.tela = pygame.display.set_mode([800,600])
-
-        self.tela.fill((255,255,255))
-
-        #outtras configuraçoes
-
-
-        continuar = True
-        print("tudo")
-
-        vx = 5
-        vy = 3
-
-        x = 400
-        y = 300
-
-        Bwidth = 100
-        Bheight = 100
-
-        corB = RGBrandom()
-        corO = RGBrandom()
-
-        while (continuar):
-
-            #Detectar evento
-            for event in pygame.event.get():
-                print(event)
-
-
-                if (event.type == pygame.QUIT ):
-                    continuar = False
-
-                elif (event.type == pygame.MOUSEBUTTONDOWN):
-                    posicao = pygame.mouse.get_pos()
-                    if (posicao[0] >= 350 and posicao[0] <= 500):
-                        #Selecionando o botao
-                        if(posicao[1] >= 150 and posicao[1] <= 200):
-                            novoJogo.newGAme(self.tela,fontePadrao,cores,rosto)
-
-                        elif(posicao[1] >= 250 and posicao[1] <= 300):
-                            interfaceT.janelaPrincipal(self.tela)
-
-                        elif (posicao[1] >= 350 and posicao[1] <= 400):
-                            print("bom")
-                            continuar = False
+pygame.init()
+pygame.display.set_caption("Tamagushy")
+tela = pygame.display.set_mode([800, 600])
+newBd = None
 
 
 
 
-            self.tela.blit(fundoMenu,(0,0))
-            global criar
-
-            #Verificação de colisão com as extremidades da tela
-
-            if (x < 50 or x > 750 ):
-                vx = -vx
-                corB = RGBrandom()
-                corO = RGBrandom()
-            if (y < 50 or y > 550):
-                vy = -vy
-                corB = RGBrandom()
-                corO = RGBrandom()
-
-            #Posiçoes
-            x += vx
-            y += vy
-
-            bichinho2_1.bixo(x, y, Bwidth, Bheight, corB, self.tela, rosto)
-
-
-            #Butoes
-
-
-            self.bt1 = pygame.draw.rect(self.tela, cores["aquamarine"],[300,150,200,50])
-            self.tela.blit(textoBt1,( 300 + 200 // 2 - txt1Width // 2 , 150 + 50 / 2 - txt1Height // 2))
-
-            self.bt2 = pygame.draw.rect(self.tela, (102,205,170),[300,250,200,50])
-            self.tela.blit(textoBt2, (300 + 200 // 2 - txt2Width // 2 , 250 + 50 // 2 - txt2Height // 2))
-
-
-            self.bt3 = pygame.draw.rect(self.tela, cores["vermelho"],[300,350,200,50])
-            self.tela.blit(textoBt3, (300 + 200 // 2 - txt3Width // 2, 350 + 50 // 2 - txt3Height // 2))
-
-            self.tela.blit(nomeJogo, (800 / 2 - nomeJogoWidth // 2, 150/2 - nomeJogoHeight //2))
+def menu ():
 
 
 
 
-            pygame.display.update()
-            clock.tick(60)
-        quit()
+
+    #outtras configuraçoes
+
+
+    continuar = True
+    print("tudo")
+
+    vx = 5
+    vy = 3
+
+    x = 400
+    y = 300
+
+    Bwidth = 100
+    Bheight = 100
+
+    corB = RGBrandom()
+    corO = RGBrandom()
+
+    while (continuar):
+
+        #Detectar evento
+        for event in pygame.event.get():
+            print(event)
+
+
+            if (event.type == pygame.QUIT ):
+                continuar = False
+
+            elif (event.type == pygame.MOUSEBUTTONDOWN):
+                posicao = pygame.mouse.get_pos()
+                if (posicao[0] >= 350 and posicao[0] <= 500):
+                    #Selecionando o botao
+                    if(posicao[1] >= 150 and posicao[1] <= 200):
+                        newBd  = True
+                        ai(newBd,tela,fontePadrao,cores,rosto)
+
+
+                    elif(posicao[1] >= 250 and posicao[1] <= 300):
+                        newBd = False
+                        ai(newBd)
+
+                    elif (posicao[1] >= 350 and posicao[1] <= 400):
+                        print("bom")
+                        continuar = False
+
+
+
+
+        tela.blit(fundoMenu,(0,0))
+        global criar
+
+        #Verificação de colisão com as extremidades da tela
+
+        if (x < 50 or x > 750 ):
+            vx = -vx
+            corB = RGBrandom()
+            corO = RGBrandom()
+        if (y < 50 or y > 550):
+            vy = -vy
+            corB = RGBrandom()
+            corO = RGBrandom()
+
+        #Posiçoes
+        x += vx
+        y += vy
+
+        bichinho2_1.bixo(x, y, Bwidth, Bheight, corB, tela, rosto)
+
+
+        #Butoes
+
+
+        bt1 = pygame.draw.rect(tela, cores["aquamarine"],[300,150,200,50])
+        tela.blit(textoBt1,( 300 + 200 // 2 - txt1Width // 2 , 150 + 50 / 2 - txt1Height // 2))
+
+        bt2 = pygame.draw.rect(tela, (102,205,170),[300,250,200,50])
+        tela.blit(textoBt2, (300 + 200 // 2 - txt2Width // 2 , 250 + 50 // 2 - txt2Height // 2))
+
+
+        bt3 = pygame.draw.rect(tela, cores["vermelho"],[300,350,200,50])
+        tela.blit(textoBt3, (300 + 200 // 2 - txt3Width // 2, 350 + 50 // 2 - txt3Height // 2))
+
+        tela.blit(nomeJogo, (800 / 2 - nomeJogoWidth // 2, 150/2 - nomeJogoHeight //2))
+
+
+
+
+        pygame.display.update()
+        clock.tick(60)
+    quit()
 
 
 
 #InterfaceTamagushy.executar()
-interface = menu()
+menu()
+
