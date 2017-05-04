@@ -1,40 +1,41 @@
 import time
-import bdTamagushy2
+import BDTamagushy
 import sqlite3
-import newTamagushy
-import interfaceT
-from MenuTamagushy import *
+import novoJogo
+import InterfaceTamagushy
+import MenuTamagushy
+
 
 continuar = True
 animal = None
 
 def iniciarBD(newBd,tela,fontePadrao,cores,rosto):
-    bdTamagushy2.conectarBD()
+    BDTamagushy.conectarBD()
 
-    if (not bdTamagushy2.tabela_existe("dados")):
+    if (not BDTamagushy.tabela_existe("dados")):
         print("Banco de dados não existe.")
         print("Criando banco de dados...")
         print()
-        bdTamagushy2.criarBD()
+        BDTamagushy.criarBD()
         continuar = True
         global animal
-        nomeCor = newTamagushy.newGAme(tela, fontePadrao, cores, rosto)
+        nomeCor = novoJogo.newGAme(tela, fontePadrao, cores, rosto)
         nome = nomeCor[0]
         cor = nomeCor[1]
-        bdTamagushy2.adicionarInformacoes(nome, 0, 100, 100)
+        BDTamagushy.adicionarInformacoes(nome, 0, 100, 100)
         newBd = False
 
     if(newBd):
         continuar = True
         global animal
-        nomeCor = newTamagushy.newGAme(tela,fontePadrao,cores,rosto)
+        nomeCor = novoJogo.newGAme(tela,fontePadrao,cores,rosto)
         nome = nomeCor[0]
         cor = nomeCor[1]
-        bdTamagushy2.atualizarDados(nome,0,100,100)
+        BDTamagushy.atualizarDados(nome,0,100,100)
 
 
 
-    dadosT = bdTamagushy2.ler_todos_clientes()
+    dadosT = BDTamagushy.ler_todos_clientes()
     linha = 0
     print(dadosT)
     animal = bichinho(dadosT[linha][1], dadosT[linha][2], dadosT[linha][3], dadosT[linha][4])
@@ -118,7 +119,7 @@ def horasEmSegundos():
     return horario
 
 
-def ai(newBd,tela,fontePadrao,cores,rosto):
+def tamagif(newBd,tela,fontePadrao,cores,rosto):
     global continuar
 
     iniciarBD(newBd,tela,fontePadrao,cores,rosto)
@@ -126,11 +127,12 @@ def ai(newBd,tela,fontePadrao,cores,rosto):
     horarioInicial = horasEmSegundos()
 
     while (continuar):
+        print("chegou")
 
         horasEmSegundos()
         print(
             "Opções:\n 1-Alterar Nome \n 2-Dar comida \n 3-Dar remédio \n 4-Ver informações \n 5-Sair e salvar informações")
-        escolha = interfaceT.janelaPrincipal(tela, rosto)
+        escolha = InterfaceTamagushy.janelaPrincipal(tela, rosto)
 
         if (escolha == 1):
             n = input("Digite o novo nome do seu bichinho: ")
@@ -158,12 +160,30 @@ def ai(newBd,tela,fontePadrao,cores,rosto):
 
             continuar = False
 
-            bdTamagushy2.atualizarDados(animal.getNome(), animal.getIdade(), animal.getFome(), animal.getSaude())
+            BDTamagushy.atualizarDados(animal.getNome(), animal.getIdade(), animal.getFome(), animal.getSaude())
 
-            input("Aperte ENTER para finalizar...")
 
         else:
             print()
             print("Tente Novamente.")
             print()
+
+executar = True
+while(executar):
+    respostaMenu = MenuTamagushy.menu()
+    newBd = respostaMenu[0]
+    tela = respostaMenu[2]
+    fontePadrao = respostaMenu[3]
+    cores = respostaMenu[4]
+    rosto = respostaMenu[5]
+    print(respostaMenu)
+
+    if (respostaMenu[1] == 1):
+        tamagif(newBd,tela,fontePadrao,cores,rosto)
+
+    elif (respostaMenu[1] == 2):
+        tamagif(newBd,tela,fontePadrao,cores,rosto)
+
+    elif (respostaMenu[1] == 3):
+        executar = False
 
