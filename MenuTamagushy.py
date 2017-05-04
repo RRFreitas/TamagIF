@@ -1,9 +1,6 @@
 import pygame
 import random
 import bichinho2_1
-import interface
-import newTamagushy
-from codigoPrincipal import *
 
 
 # Tela Principal
@@ -75,15 +72,9 @@ newBd = None
 
 def menu ():
 
-
-
-
-
-    #outtras configuraçoes
-
-
     continuar = True
-    print("tudo")
+    newBd = None
+    resposta = 0
 
     vx = 5
     vy = 3
@@ -101,11 +92,12 @@ def menu ():
 
         #Detectar evento
         for event in pygame.event.get():
-            print(event)
+
 
 
             if (event.type == pygame.QUIT ):
                 continuar = False
+                resposta = 3
 
             elif (event.type == pygame.MOUSEBUTTONDOWN):
                 posicao = pygame.mouse.get_pos()
@@ -113,15 +105,17 @@ def menu ():
                     #Selecionando o botao
                     if(posicao[1] >= 150 and posicao[1] <= 200):
                         newBd  = True
-                        ai(newBd,tela,fontePadrao,cores,rosto)
-
+                        resposta = 1
+                        continuar = False
 
                     elif(posicao[1] >= 250 and posicao[1] <= 300):
                         newBd = False
-                        ai(newBd)
+                        resposta = 2
+                        continuar = False
 
                     elif (posicao[1] >= 350 and posicao[1] <= 400):
-                        print("bom")
+                        newBd = False
+                        resposta = 3
                         continuar = False
 
 
@@ -168,10 +162,10 @@ def menu ():
 
         pygame.display.update()
         clock.tick(60)
-    quit()
-
+    if resposta == 3:
+        quit()
+    return (newBd,resposta,tela,fontePadrao,cores,rosto)
 
 
 #InterfaceTamagushy.executar()
 menu()
-
