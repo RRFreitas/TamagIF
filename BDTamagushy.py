@@ -1,4 +1,3 @@
-import Tamagushy
 import sqlite3
 
 dados = None
