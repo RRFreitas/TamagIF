@@ -3,13 +3,6 @@ import random
 import bichinho2_1
 
 
-# Tela Principal
-
-
-
-
-
-
 #Algumas variaveis
 clock = pygame.time.Clock()
 bichinhos = []
