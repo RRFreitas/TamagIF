@@ -1,6 +1,5 @@
 import pygame
 import bichinho2_1
-import codigoPrincipal
 from MenuTamagushy import *
 
 
@@ -30,29 +29,30 @@ def newGAme(tela ,fontePrincipal,cores,rosto):
             if (event.type == pygame.QUIT):
                 continuar = False
 
+            #Verificando posicao do click
             elif (event.type == pygame.MOUSEBUTTONDOWN):
                 if (corOk):
                     xm =  pygame.mouse.get_pos()[0]
                     ym =  pygame.mouse.get_pos()[1]
                     if (ym >= yc and ym <= yc + radio):
-                        if (xm >= xc and xm <= xc + radio):
+                        if (xm >= xc - radio//2 and xm <= xc + radio // 2):
                             cor = cores["red"]
                             corOk = True
                             continuar = False
 
-                        if (xm >= xc + 150 and xm <= xc + radio +150):
+                        if (xm >= xc + 150 - radio//2 and xm <= xc + radio//2 +150 ):
                             cor = cores["green"]
                             print("oi")
                             corOk = True
                             continuar = False
 
 
-                        if (xm >= xc + 300 and xm <= xc + radio +300):
+                        if (xm >= xc + 300 - radio//2 and xm <= xc + radio//2 +300):
                             cor = cores["blue"]
                             corOk = True
                             continuar = False
 
-
+            #Entrada do nome do tamagif
             elif (event.type == pygame.KEYDOWN):
 
 
