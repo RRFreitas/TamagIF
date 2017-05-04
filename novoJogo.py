@@ -1,14 +1,16 @@
 import pygame
 import bichinho2_1
+import codigoPrincipal
+from MenuTamagushy import *
 
 
 fundoPrincipal = pygame.image.load("imagens/FundoPrincipal_azulClaro.png")
 clock = pygame.time.Clock()
 
-def newGAme(tela,fontePrincipal,cores,rosto):
+def newGAme(tela ,fontePrincipal,cores,rosto):
     #Algumas Variaveis importante
+    pygame.init()
     clock = pygame.time.Clock()
-    continuar = True
     fundoPrincipal = pygame.image.load("imagens/FundoPrincipal_azulClaro.png")
     print("ds")
     nome = ""
@@ -18,6 +20,9 @@ def newGAme(tela,fontePrincipal,cores,rosto):
     text1 = destaque.render("Digite o nome do seu Tamagushy:",True,(0,0,0))
     nomeOk = False
     corOk = False
+    cor = None
+
+    continuar = True
 
     while (continuar):
         # Verificando Eventos
@@ -26,7 +31,7 @@ def newGAme(tela,fontePrincipal,cores,rosto):
                 continuar = False
 
             elif (event.type == pygame.MOUSEBUTTONDOWN):
-                if (not corOk):
+                if (corOk):
                     xm =  pygame.mouse.get_pos()[0]
                     ym =  pygame.mouse.get_pos()[1]
                     if (ym >= yc and ym <= yc + radio):
@@ -37,6 +42,7 @@ def newGAme(tela,fontePrincipal,cores,rosto):
 
                         if (xm >= xc + 150 and xm <= xc + radio +150):
                             cor = cores["green"]
+                            print("oi")
                             corOk = True
                             continuar = False
 
@@ -52,6 +58,7 @@ def newGAme(tela,fontePrincipal,cores,rosto):
 
 
                 if (nomeOk == False):
+                    corOk = True
                     press = pygame.key.get_pressed()
                     for i in range(0, len(press)):
                         print(i)
