@@ -1,3 +1,4 @@
+#Imports
 import time
 import BDTamagushy
 import sqlite3
@@ -5,27 +6,38 @@ import novoJogo
 import InterfaceTamagushy
 import MenuTamagushy
 
-
-continuar = True
-animal = None
+#Variaveis auxiliares
+continuar = True # Variavel para determinar se ele ira continuar a rodar o progama
+animal = None  # Feita para a função iniciarBD poder aza-la para iniciar a class bichinho
 
 def iniciarBD(newBd,tela,fontePadrao,cores,rosto):
     BDTamagushy.conectarBD()
-
+    #Verificando se a tabela existe
     if (not BDTamagushy.tabela_existe("dados")):
         print("Banco de dados não existe.")
         print("Criando banco de dados...")
         print()
+        
+        #Chama a função para criar a tabela
+        
         BDTamagushy.criarBD()
         continuar = True
+        # Chama a variavel animal GLobal
         global animal
+        # Chamara a função newGame de novojogo que está encarregada de mostrar a tela de novo jogo e retornar uma tupla com o nome 
+        # e com uma tupla de interiros representando a cor
         nomeCor = novoJogo.newGAme(tela, fontePadrao, cores, rosto)
+        #Separando valores retornados da função newGAme para melhor utilização
         nome = nomeCor[0]
         cor = nomeCor[1]
+        #adiciona as informações obtdas no Banco de dados
         BDTamagushy.adicionarInformacoes(nome, 0, 100, 100)
+        # diz para o progama que não será presciso criar um novo bichinho, pois ja fio criado
         newBd = False
-
+    
+    #função para criar um novo bichinho, ou novo jogo
     if(newBd):
+        #Realiza a mesma coisa que o if anterior, mas dessa vez ele atualiza os dados ao inves de adiciona-los
         continuar = True
         global animal
         nomeCor = novoJogo.newGAme(tela,fontePadrao,cores,rosto)
@@ -34,10 +46,11 @@ def iniciarBD(newBd,tela,fontePadrao,cores,rosto):
         BDTamagushy.atualizarDados(nome,0,100,100)
 
 
-
+    #ler os dados do banco de Dados !!!! ELE ESTÁ COM PROBLEMA, ELE NÃO IDENTIFICA NADA DENTRO DO BANCO DE DADOS!!!
     dadosT = BDTamagushy.ler_todos_clientes()
     linha = 0
-    print(dadosT)
+    print(dadosT) # essa variavelfoi criado para eu ver se ele cria o banco de dados corretamento
+    # Iniciar a classe bichinho  e atribui a animal com os valores do banco de dados
     animal = bichinho(dadosT[linha][1], dadosT[linha][2], dadosT[linha][3], dadosT[linha][4])
 
     print("--------------------")
@@ -48,7 +61,7 @@ def iniciarBD(newBd,tela,fontePadrao,cores,rosto):
     print("--------------------")
 
 
-
+#Essa parte vocÊ sabe;)
 class bichinho():
     def __init__(self, nome, idade, fome, saude):
         self.nome = nome
@@ -118,10 +131,16 @@ def horasEmSegundos():
     horario = ((time.localtime().tm_hour - 3) * 3600) + (time.localtime().tm_min * 60) + time.localtime().tm_sec
     return horario
 
+#Esses parametros são para ele fazer a tela
+#newBD = Identifica se deverá ser criado um novo bichinho
+#tela = é a tela prncipal onde será exibido as informaõe e interações
+#é a fonte padrao para todo texto no progaa
+#Cores é aquele dicionario de cores
+#E rosto é a imagem que criasse
 
 def tamagif(newBd,tela,fontePadrao,cores,rosto):
     global continuar
-
+      
     iniciarBD(newBd,tela,fontePadrao,cores,rosto)
 
     horarioInicial = horasEmSegundos()
@@ -132,6 +151,7 @@ def tamagif(newBd,tela,fontePadrao,cores,rosto):
         horasEmSegundos()
         print(
             "Opções:\n 1-Alterar Nome \n 2-Dar comida \n 3-Dar remédio \n 4-Ver informações \n 5-Sair e salvar informações")
+        #Para identificar a decisão do usuario ele chamará a tela rincipal e analizara a escolha
         escolha = InterfaceTamagushy.janelaPrincipal(tela, rosto)
 
         if (escolha == 1):
@@ -170,6 +190,7 @@ def tamagif(newBd,tela,fontePadrao,cores,rosto):
 
 executar = True
 while(executar):
+    #chama o menu e analiza oque o usuario deseja fazer
     respostaMenu = MenuTamagushy.menu()
     newBd = respostaMenu[0]
     tela = respostaMenu[2]
