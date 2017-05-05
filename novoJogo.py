@@ -61,17 +61,17 @@ def newGAme(tela ,fontePrincipal,cores,rosto):
                     corOk = True
                     press = pygame.key.get_pressed()
                     for i in range(0, len(press)):
-                        print(i)
-                        print(pygame.key.name(i))
+                        #print(i)
+                        #print(pygame.key.name(i))
                         if (press[i] == 1):
                             if (len(nome )== 12):
                                 if (i == 8):
                                     if (nome != ""):
                                         nome = list(nome)
-                                        print(nome)
+                                        #print(nome)
                                         nome.pop()
                                         nome = "".join(nome)
-                                        print(nome)
+                                        #print(nome)
 
                                 else:
                                     fonte_aviso = pygame.font.SysFont("arial", 25)
@@ -81,10 +81,10 @@ def newGAme(tela ,fontePrincipal,cores,rosto):
                                 if (i == 8):
                                     if (nome != ""):
                                         nome = list(nome)
-                                        print(nome)
+                                        #print(nome)
                                         nome.pop()
                                         nome = "".join(nome)
-                                        print(nome)
+                                        #print(nome)
 
                                 elif (i == 13):
                                     nomeOk = True
