@@ -78,7 +78,9 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
     txtIH = txtI.get_height()
 
     escolha = 0
-
+    escolha2 = False
+    escolha3 = False
+    comida = 0
 
     while (continuar):
         idadeSTR = str(idade)
@@ -89,12 +91,11 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
                 sair = True
                 continuar = False
                 escolha = 5
-                
                 print("ELe fdfd")
 
 
             elif (event.type == pygame.MOUSEBUTTONDOWN):
-                if not escolha == 1:
+                if not escolha == 1 or not escolha2 or not escolha3:
                     x = pygame.mouse.get_pos()[0]
                     y = pygame.mouse.get_pos()[1]
                     if (x >= 10 and x <= 160):
@@ -103,6 +104,7 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
 
                         elif (y >= 200 and y <= 250):
                             escolha = 2
+                            escolha2 = True
 
 
 
@@ -110,11 +112,20 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
                         if (y >= 100 and y <= 150):
                             escolha = 3
                             continuar = False
+                            escolha3 = True
 
                         elif (y >= 200 and y <= 250):
                             escolha = 4
                             continuar = False
+                if escolha2:
+                    x = pygame.mouse.get_pos()[0]
+                    y = pygame.mouse.get_pos()[1]
+                    if y >= 327 and y <= 347:
+                        if x >= (400 - w + 2) and x <= (400 - w + 2) + 20:
+                            comida +=1
 
+                        elif x >= (400 + w) and x <= (400 + w) + 20:
+                            comida-=1
 
             if (event.type == pygame.KEYDOWN):
 
@@ -208,10 +219,17 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
 
 
         if escolha == 2:
-            comidas = 0
-            mais = pygame.draw.rect(tela,(255,0,0),(425 - w - 50 ,327 ,20,30))
-            menos = pygame.draw.rect(tela,(255,255,0),(425 + w//2 + 10,327,20,30))
 
+            textF1 = fontePadrao.render("+",True,(0,0,0))
+            textF2 = fontePadrao.render("-", True, (0, 0, 0))
+            textF3 = fonte.render("Alimentar",True,(0,0,0))
+            mais = pygame.draw.rect(tela,(255,0,0),(400 - w  ,337 ,20,20))
+            tela.blit(textF1,(400 - w + 2,328))
+            menos = pygame.draw.rect(tela,(255,255,0),(400 + w ,330,20,20))
+            tela.blit(textF2, (400 + w , 328))
+            comidaok = pygame.draw.rect(tela,(255,255,255),(300,300 + w,200,30))
+            tela.blit(textF3,(350,300 + w))
+            print(comida)
 
 
         pygame.display.update()
@@ -221,8 +239,6 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
     idade = animal.getIdade()
     cor = animal.getCor()
 
-     if (sair):
-            escolha = 5
-            return escolha
-    print(escolha,nome,saude,fome,idade)
-    return (escolha,nome,saude,fome,idade)
+
+    return (escolha,nome,idade,fome,saude)
+
