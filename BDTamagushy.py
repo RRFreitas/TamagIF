@@ -1,4 +1,4 @@
-import sqlite3
+
 
 dados = None
 cursor = None
@@ -35,7 +35,10 @@ def criarBD():
     nome TEXT NOT NULL,
     idade INTEGER NOT NULL,
     fome INTEGER NOT NULL,
-    saude INTERGER NOT NULL
+    saude INTEGER NOT NULL,
+    r INTEGER NOT NULL,
+    g INTEGER NOT NULL,
+    b INTEGER NOT NULL
 );
 """)
 
@@ -44,14 +47,15 @@ def ler_todos_clientes():
     global cursor
     sql = 'SELECT * FROM dados'
     r = cursor.execute(sql)
+
     return r.fetchall()
 
 #Adicionando informacoes
-def adicionarInformacoes(nome, idade, fome, saude):
+def adicionarInformacoes(nome, idade, fome, saude,r,g,b):
     cursor.execute("""
-        INSERT INTO dados(id,nome,idade,fome,saude)
-        VALUES (NULL,?,?,?,?)
-    """, (nome, idade, fome, saude))
+        INSERT INTO dados(id,nome,idade,fome,saude,r,g,b)
+        VALUES (NULL,?,?,?,?,?,?,?)
+    """, (nome, idade, fome, saude,r,g,b))
 
     dados.commit()
     print()
@@ -59,8 +63,8 @@ def adicionarInformacoes(nome, idade, fome, saude):
     print()
 
 #atualizando os dados
-def atualizarDados (nome,idade,fome,saude):
+def atualizarDados (nome,idade,fome,saude,r,g,b):
     cursor.execute("""
     UPDATE dados 
-    SET nome = ?,idade = ? , fome = ? , saude = ?
-""",(nome,idade,fome,saude))
+    SET nome = ?,idade = ? , fome = ? , saude = ? , r = ? , g = ? , b = ?
+""",(nome,idade,fome,saude,r,g,b))
