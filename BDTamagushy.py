@@ -68,3 +68,5 @@ def atualizarDados (nome,idade,fome,saude,r,g,b):
     UPDATE dados 
     SET nome = ?,idade = ? , fome = ? , saude = ? , r = ? , g = ? , b = ?
 """,(nome,idade,fome,saude,r,g,b))
+
+    dados.commit()
