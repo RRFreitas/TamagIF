@@ -1,6 +1,6 @@
 import pygame
 import bichinho2_1
-from MenuTamagushy import *
+
 
 
 fundoPrincipal = pygame.image.load("imagens/FundoPrincipal_azulClaro.png")
