@@ -1,4 +1,6 @@
 import random
+import pygame
+import bichinho2_1
 
 def RGBrandom ():
     r = random.randint(1,255)
@@ -14,6 +16,58 @@ rost = pygame.image.load("imagens/rosto.png")
 
 
 fundo = pygame.image.load("imagens/fundoPrincipal.png")
+natela = []
+vi = None
+re= False
+
+def fase(inimigos,w,h,cor,atirados):
+
+
+    natela_a = natela.copy()
+    natela.clear()
+    global vi
+    global re
+    for n,vi in natela_a:
+
+
+        if (n >=0 and n <= 800 - w):
+            vi = vi
+
+        else:
+            print("Voltando")
+            vi = -vi
+
+
+        x = n + vi
+
+        inimigo1 = pygame.draw.rect(tela, cor, (x, 10, w, h))
+        natela.append((x,vi))
+
+        for xb,yb in atirados:
+            if (xb >= x  and xb <= x + w):
+                if (yb  >=  10 and yb <= 30  ):
+                    print("vai tirar")
+                    natela.pop()
+
+
+
+
+
+
+
+    for i in inimigos:
+        x = random.randint(0, 700)
+        inimigos.pop()
+        vi = 2
+        natela.append((x,vi))
+
+    if natela == []:
+        return True
+
+
+
+
+    return False
 
 
 
@@ -31,6 +85,13 @@ def jogoNave():
     atirou = False
     atirados = []
     atirados_auxiliar = []
+    fase1 = True
+    inimigos1 = list(range(0, 5))
+    fase2 = False
+    inimigos2 = list(range(0,10))
+    fase3 = False
+    inimigos3 = list(range(0,20))
+
 
     while(continuar):
         tela.blit(fundo, (0, 0))
@@ -110,6 +171,22 @@ def jogoNave():
             bala = pygame.draw.circle(tela, RGBrandom(), (xtiros,580), 10)
             xtiros -= 20
 
+        if (fase1):
+
+            fase2 =fase(inimigos1,100,20,(0,0,17),atirados)
+
+
+        if(fase2):
+            fase1 = False
+            print("fase2")
+            fase3 = fase(inimigos2,50,10,(0,0,0),atirados)
+
+        if(fase3):
+            fase2  = False
+            print()
+            fase(inimigos3,35,5,(3,255,127),atirados)
+
+
 
         bichinho2_1.bixo(x,490,100,100,(255,235,2),tela,rost)
         pygame.display.update()
@@ -117,4 +194,3 @@ def jogoNave():
 
 
 
-jogoNave()
