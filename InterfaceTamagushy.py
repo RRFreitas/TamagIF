@@ -9,6 +9,7 @@ escolha = None
 def janelaPrincipal(tela,rosto):
     clock = pygame.time.Clock()
     continuar = True
+    sair = False
     fundoPrincipal = pygame.image.load("imagens/FundoPrincipal_azulClaro.png")
     print("ds")
     while (continuar):
