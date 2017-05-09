@@ -1,7 +1,7 @@
 import pygame
 import random
 import bichinho2_1
-from novoJogo import newGAme
+
 
 
 #Algumas variaveis
@@ -158,11 +158,8 @@ def menu ():
         clock.tick(60)
     if resposta == 3:
         quit()
-    if resposta == 1:
-        print('asjid')
-        newGAme(tela, fontePadrao, cores, rosto)
+
     return (newBd,resposta,tela,fontePadrao,cores,rosto)
 
 
-#InterfaceTamagushy.executar()
-menu()
+
