@@ -2,9 +2,9 @@
 import time
 import BDTamagushy
 import sqlite3
-import novoJogo
 import InterfaceTamagushy
 import MenuTamagushy
+import novoJogo
 
 #Variaveis auxiliares
 continuar = True # Variavel para determinar se ele ira continuar a rodar o progama
@@ -26,10 +26,14 @@ def iniciarBD(newBd,tela,fontePadrao,cores,rosto):
         global animal
         # Chamara a função newGame de novojogo que está encarregada de mostrar a tela de novo jogo e retornar uma tupla com o nome 
         # e com uma tupla de interiros representando a cor
+        print('antes')
         nomeCor = novoJogo.newGAme(tela, fontePadrao, cores, rosto)
         #Separando valores retornados da função newGAme para melhor utilização
+        print('dps')
         nome = nomeCor[0]
         cor = nomeCor[1]
+
+        print(nome, cor)
         #adiciona as informações obtdas no Banco de dados
         BDTamagushy.adicionarInformacoes(nome, 0, 100, 100)
         # diz para o progama que não será presciso criar um novo bichinho, pois ja fio criado
@@ -49,6 +53,7 @@ def iniciarBD(newBd,tela,fontePadrao,cores,rosto):
     #ler os dados do banco de Dados !!!! ELE ESTÁ COM PROBLEMA, ELE NÃO IDENTIFICA NADA DENTRO DO BANCO DE DADOS!!!
     dadosT = BDTamagushy.ler_todos_clientes()
     linha = 0
+    print('asjidojas')
     print(dadosT) # essa variavelfoi criado para eu ver se ele cria o banco de dados corretamento
     # Iniciar a classe bichinho  e atribui a animal com os valores do banco de dados
     animal = bichinho(dadosT[linha][1], dadosT[linha][2], dadosT[linha][3], dadosT[linha][4])
@@ -140,7 +145,8 @@ def horasEmSegundos():
 
 def tamagif(newBd,tela,fontePadrao,cores,rosto):
     global continuar
-      
+    print('tamagif')
+
     iniciarBD(newBd,tela,fontePadrao,cores,rosto)
 
     horarioInicial = horasEmSegundos()
@@ -200,9 +206,11 @@ while(executar):
     print(respostaMenu)
 
     if (respostaMenu[1] == 1):
+        print('resposta 1')
         tamagif(newBd,tela,fontePadrao,cores,rosto)
 
     elif (respostaMenu[1] == 2):
+        print('resposta 2')
         tamagif(newBd,tela,fontePadrao,cores,rosto)
 
     elif (respostaMenu[1] == 3):
