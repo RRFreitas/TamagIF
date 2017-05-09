@@ -2,9 +2,10 @@
 import time
 import BDTamagushy
 import sqlite3
+import novoJogo
 import InterfaceTamagushy
 import MenuTamagushy
-import novoJogo
+import jogo1
 
 #Variaveis auxiliares
 continuar = True # Variavel para determinar se ele ira continuar a rodar o progama
@@ -24,18 +25,15 @@ def iniciarBD(newBd,tela,fontePadrao,cores,rosto):
         continuar = True
         # Chama a variavel animal GLobal
         global animal
-        # Chamara a função newGame de novojogo que está encarregada de mostrar a tela de novo jogo e retornar uma tupla com o nome 
-        # e com uma tupla de interiros representando a cor
-        print('antes')
         nomeCor = novoJogo.newGAme(tela, fontePadrao, cores, rosto)
-        #Separando valores retornados da função newGAme para melhor utilização
-        print('dps')
+
         nome = nomeCor[0]
         cor = nomeCor[1]
-
-        print(nome, cor)
+        r = cor[0]
+        g = cor[1]
+        b = cor[2]
         #adiciona as informações obtdas no Banco de dados
-        BDTamagushy.adicionarInformacoes(nome, 0, 100, 100)
+        BDTamagushy.adicionarInformacoes(nome, 0, 100, 100,r,g,b)
         # diz para o progama que não será presciso criar um novo bichinho, pois ja fio criado
         newBd = False
     
@@ -47,17 +45,19 @@ def iniciarBD(newBd,tela,fontePadrao,cores,rosto):
         nomeCor = novoJogo.newGAme(tela,fontePadrao,cores,rosto)
         nome = nomeCor[0]
         cor = nomeCor[1]
-        BDTamagushy.atualizarDados(nome,0,100,100)
+        r = cor[0]
+        g = cor[1]
+        b = cor[2]
+        BDTamagushy.atualizarDados(nome,0,100,100,r,g,b)
 
 
     #ler os dados do banco de Dados !!!! ELE ESTÁ COM PROBLEMA, ELE NÃO IDENTIFICA NADA DENTRO DO BANCO DE DADOS!!!
-    #Acho que magicamente ajeitei
     dadosT = BDTamagushy.ler_todos_clientes()
     linha = 0
-    print('asjidojas')
     print(dadosT) # essa variavelfoi criado para eu ver se ele cria o banco de dados corretamento
-    # Iniciar a classe bichinho  e atribui a animal com os valores do banco de dados
-    animal = bichinho(dadosT[linha][1], dadosT[linha][2], dadosT[linha][3], dadosT[linha][4])
+
+    ajudinha = dadosT[linha]
+    animal = bichinho(dadosT[linha][1], dadosT[linha][2], dadosT[linha][3], dadosT[linha][4],dadosT[linha][5],dadosT[linha][6],dadosT[linha][7])
 
     print("--------------------")
     print("Seu Nome:", animal.getNome())
@@ -69,11 +69,12 @@ def iniciarBD(newBd,tela,fontePadrao,cores,rosto):
 
 #Essa parte vocÊ sabe;)
 class bichinho():
-    def __init__(self, nome, idade, fome, saude):
+    def __init__(self, nome, idade, fome, saude,r,g,b):
         self.nome = nome
         self.idade = idade
         self.fome = fome
         self.saude = saude
+        self.cor = (r,g,b)
         self.nascimento = horasEmSegundos()
         self.ultimaAlimentacao = horasEmSegundos()
         self.ultimaMedicacao = horasEmSegundos()
@@ -97,6 +98,9 @@ class bichinho():
         self.saude = s
 
     # Retornadores
+    def getCor (self):
+        return self.cor
+
     def getIdade(self):
         return self.idade + ((horasEmSegundos() - self.nascimento) // 10)
 
@@ -145,9 +149,8 @@ def horasEmSegundos():
 #E rosto é a imagem que criasse
 
 def tamagif(newBd,tela,fontePadrao,cores,rosto):
-    global continuar
-    print('tamagif')
-
+    continuar = True
+      
     iniciarBD(newBd,tela,fontePadrao,cores,rosto)
 
     horarioInicial = horasEmSegundos()
@@ -159,17 +162,13 @@ def tamagif(newBd,tela,fontePadrao,cores,rosto):
         print(
             "Opções:\n 1-Alterar Nome \n 2-Dar comida \n 3-Dar remédio \n 4-Ver informações \n 5-Sair e salvar informações")
         #Para identificar a decisão do usuario ele chamará a tela rincipal e analizara a escolha
-        escolha = InterfaceTamagushy.janelaPrincipal(tela, rosto)
 
-        if (escolha == 1):
-            n = input("Digite o novo nome do seu bichinho: ")
-            animal.setNome(n)
-
-        elif (escolha == 2):
+        nome = animal.getNome()
+        escolha = InterfaceTamagushy.janelaPrincipal(tela, rosto,fontePadrao,animal)
+        #Eu havia retitado a escolha 2 e 3 , mas vou só vou retirar quando terinarmos de fazer isso na tela rincial
+        if (escolha[0] == 2):
             Qcomida = float(input("Digite quantas comidas você vai dar a seu bichinho: "))
             f = Qcomida
-
-            animal.setFome(f)
 
         elif (escolha == 3):
             Qremedio = int(input("Digite quantas pilulas você vai dar a seu bichinho: "))
@@ -178,42 +177,47 @@ def tamagif(newBd,tela,fontePadrao,cores,rosto):
             print(s)
             animal.setSaude(s)
 
-        elif (escolha == 4):
-            Ver()
+        elif (escolha[0] == 4):
+            jogo1.jogoNave()
 
-        elif (escolha == 5):
+        elif (escolha[0] == 5):
             print()
             print("Volte Sempre!")
 
+            nome = escolha[1]
             continuar = False
+            cor = animal.getCor()
+            r = cor[0]
+            g = cor[1]
+            b = cor[2]
+            print(nome)
+            print(escolha[1])
+            print(escolha[2])
+            print(animal.getFome)
 
-            BDTamagushy.atualizarDados(animal.getNome(), animal.getIdade(), animal.getFome(), animal.getSaude())
+            BDTamagushy.atualizarDados(escolha[1], escolha[2], escolha[3], escolha[4],r,g,b)
 
 
-        else:
-            print()
-            print("Tente Novamente.")
-            print()
+
 
 executar = True
 while(executar):
     #chama o menu e analiza oque o usuario deseja fazer
     respostaMenu = MenuTamagushy.menu()
     newBd = respostaMenu[0]
+    resposta = respostaMenu[1]
     tela = respostaMenu[2]
     fontePadrao = respostaMenu[3]
     cores = respostaMenu[4]
     rosto = respostaMenu[5]
-    print(respostaMenu)
+    print("oi",respostaMenu)
 
-    if (respostaMenu[1] == 1):
-        print('resposta 1')
+    if (resposta == 1):
         tamagif(newBd,tela,fontePadrao,cores,rosto)
 
-    elif (respostaMenu[1] == 2):
-        print('resposta 2')
+    elif (resposta == 2):
         tamagif(newBd,tela,fontePadrao,cores,rosto)
 
-    elif (respostaMenu[1] == 3):
+    elif (resposta == 3):
         executar = False
 
