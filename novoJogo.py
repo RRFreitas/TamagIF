@@ -11,7 +11,6 @@ def newGAme(tela ,fontePrincipal,cores,rosto):
     pygame.init()
     clock = pygame.time.Clock()
     fundoPrincipal = pygame.image.load("imagens/FundoPrincipal_azulClaro.png")
-    print("ds")
     nome = ""
     text = fontePrincipal.render(nome, True, (0, 0, 0))
     escrever = False
