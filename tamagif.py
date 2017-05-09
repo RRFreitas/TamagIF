@@ -51,6 +51,7 @@ def iniciarBD(newBd,tela,fontePadrao,cores,rosto):
 
 
     #ler os dados do banco de Dados !!!! ELE ESTÁ COM PROBLEMA, ELE NÃO IDENTIFICA NADA DENTRO DO BANCO DE DADOS!!!
+    #Acho que magicamente ajeitei
     dadosT = BDTamagushy.ler_todos_clientes()
     linha = 0
     print('asjidojas')
