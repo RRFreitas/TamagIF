@@ -80,7 +80,10 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
     escolha = 0
     escolha2 = False
     escolha3 = False
+    escolha4 = False
+    minigame = 0
     comida = 0
+    pilulas = 0
 
     while (continuar):
         idadeSTR = str(idade)
@@ -111,21 +114,58 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
                     elif (x >= 640 and x <= 790):
                         if (y >= 100 and y <= 150):
                             escolha = 3
-                            continuar = False
                             escolha3 = True
 
                         elif (y >= 200 and y <= 250):
                             escolha = 4
-                            continuar = False
+                            escolha4 = True
+
                 if escolha2:
                     x = pygame.mouse.get_pos()[0]
                     y = pygame.mouse.get_pos()[1]
-                    if y >= 327 and y <= 347:
-                        if x >= (400 - w + 2) and x <= (400 - w + 2) + 20:
-                            comida +=1
+                    if y >= 330 and y <= 350:
+                        if x >= (400 - w ) and x <= (400 - w) + 20:
+                            comida = comida + 1
 
                         elif x >= (400 + w) and x <= (400 + w) + 20:
-                            comida-=1
+                            comida = comida - 1
+                    if y >= 300 + w and y <= 300 + w + 30:
+                        if x >= 300 and x <= 500:
+                            escolha2 = False
+                            fome = animal.setFome(comida)
+                            comida = 0
+
+                if escolha3:
+                    x = pygame.mouse.get_pos()[0]
+                    y = pygame.mouse.get_pos()[1]
+                    if y >= 330 and y <= 350:
+                        if x >= (400 - w ) and x <= (400 - w) + 20:
+                            pilulas = pilulas + 1
+
+                        elif x >= (400 + w) and x <= (400 + w) + 20:
+                            pilulas = pilulas - 1
+                    if y >= 300 + w and y <= 300 + w + 30:
+                        if x >= 300 and x <= 500:
+                            escolha3 = False
+                            saude = animal.setSaude(pilulas)
+                            comida = 0
+
+                if escolha4:
+                    x = pygame.mouse.get_pos()[0]
+                    y = pygame.mouse.get_pos()[1]
+                    if (y >= 300 and y <= 350):
+                        if(x >= 20 and x <= 220 ):
+                            escolha = 4
+                            minigame = 1
+                            continuar = False
+
+                        elif(x >= 580 and x <= 780):
+                            escolha = 4
+                            minigame = 2
+                            continuar = False
+
+
+
 
             if (event.type == pygame.KEYDOWN):
 
@@ -218,18 +258,66 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
         tela.blit(idadetxt,(670,539))
 
 
-        if escolha == 2:
+        if escolha2:
 
             textF1 = fontePadrao.render("+",True,(0,0,0))
             textF2 = fontePadrao.render("-", True, (0, 0, 0))
             textF3 = fonte.render("Alimentar",True,(0,0,0))
-            mais = pygame.draw.rect(tela,(255,0,0),(400 - w  ,337 ,20,20))
-            tela.blit(textF1,(400 - w + 2,328))
+            #Quantidade de comidas
+            textF4 = fonte.render(str(comida),True,(0,0,0))
+            textF4W = textF4.get_width()
+
+            mais = pygame.draw.rect(tela,(255,0,0),(400 - w  ,330 ,20,20))
+            tela.blit(textF1,(400 - w + 2,319))
             menos = pygame.draw.rect(tela,(255,255,0),(400 + w ,330,20,20))
-            tela.blit(textF2, (400 + w , 328))
+            tela.blit(textF2, (400 + w , 320))
             comidaok = pygame.draw.rect(tela,(255,255,255),(300,300 + w,200,30))
             tela.blit(textF3,(350,300 + w))
+            tela.blit(textF4,(400 - textF4W //2,330 + w))
             print(comida)
+
+        #Dar Remedio
+        if escolha3:
+
+            textS1 = fontePadrao.render("+",True,(0,0,0))
+            textS2 = fontePadrao.render("-", True, (0, 0, 0))
+            textS3 = fonte.render("Medicar",True,(0,0,0))
+            #Quantidade de pilulas
+            textS4 = fonte.render(str(pilulas),True,(0,0,0))
+            textS4W = textS4.get_width()
+
+            mais = pygame.draw.rect(tela,(255,0,0),(400 - w  ,337 ,20,20))
+            tela.blit(textS1,(400 - w + 2,328))
+            menos = pygame.draw.rect(tela,(255,255,0),(400 + w ,330,20,20))
+            tela.blit(textS2, (400 + w , 328))
+            pilulasok = pygame.draw.rect(tela,(255,255,255),(300,300 + w,200,30))
+            tela.blit(textS3,(350,300 + w))
+            tela.blit(textS4,(400 - textS4W //2,320 + w))
+            print(pilulas)
+
+        if escolha4:
+            #MG = Minigames
+            tela.blit(fundoPrincipal,(0,0))
+            textMG1 = fontePadrao.render("tiro ao alvo",True,(0,0,0))
+            textMG1W = textMG1.get_width()
+            textMG1H = textMG1.get_height()
+            textMG2 = fontePadrao.render("Desviando",True,(0,0,0))
+            textMG2W = textMG2.get_width()
+            textMG2H = textMG2.get_height()
+
+            #Titulo
+            textJogos = fontePadrao.render("Mini Games",True,(0,0,0))
+            textJogosW = textJogos.get_width()
+            tela.blit(textJogos,(400 - textJogosW // 2,10))
+
+            #Desenhando butões
+            bt1 = pygame.draw.rect(tela,(0,0,255),(20,300,200,50))
+            bt2 = pygame.draw.rect(tela,(0,0,255),(580,300,200,50))
+
+
+            #Digitando texto nos butoes
+            tela.blit(textMG1,((100 - textMG1W // 2) + 20, 325 - textMG1H // 2))
+            tela.blit(textMG2, ((100 - textMG2W // 2) + 580, 325 - textMG1H // 2))
 
 
         pygame.display.update()
@@ -240,5 +328,4 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
     cor = animal.getCor()
 
 
-    return (escolha,nome,idade,fome,saude)
-
+    return (escolha,nome,idade,fome,saude,cor,minigame)
