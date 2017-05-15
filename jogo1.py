@@ -1,6 +1,7 @@
 import random
 import pygame
 import bichinho2_1
+import time
 
 def RGBrandom ():
     r = random.randint(1,255)
@@ -17,63 +18,105 @@ rost = pygame.image.load("imagens/rosto.png")
 
 fundo = pygame.image.load("imagens/fundoPrincipal.png")
 natela = []
-vi = None
-re= False
+atingiu = False
 
-def fase(inimigos,w,h,cor,atirados):
+bala = 1
+
+
+def fase(inimigos,w,h,cor,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb):
 
 
     natela_a = natela.copy()
     natela.clear()
-    global vi
-    global re
-    for n,vi in natela_a:
+    global bala
+    global atingiu
+
+    for n,vi,xbala,ybala in natela_a:
+
+
+        if atirados == []:
+            atirou = False
 
 
         if (n >=0 and n <= 800 - w):
             vi = vi
 
         else:
-            print("Voltando")
             vi = -vi
 
 
         x = n + vi
 
-        inimigo1 = pygame.draw.rect(tela, cor, (x, 10, w, h))
-        natela.append((x,vi))
+        if x >= 0 and x <=800:
+            print("DEsenhou",w,h)
+            inimigo1 = pygame.draw.rect(tela, cor, (x, 10, w, h))
+
+        tiro = pygame.draw.circle(tela,(0,0,0),(xbala,ybala + h),5)
+        ybala += vb
+
+
+
+
 
         for xb,yb in atirados:
             if (xb >= x  and xb <= x + w):
                 if (yb  >=  10 and yb <= 30  ):
                     print("vai tirar")
-                    natela.pop()
+                    x =  - 100
+
+
+        if ybala >= 490 and ybala <= 490 + h:
+            if xbala >= xUsuario - wUsuario//2 and xbala <= xUsuario + wUsuario//2:
+                vidas -= 1
+                atingiu = True
+
+        if atingiu:
+            xbala = x
+            ybala = 10
+            atingiu = False
+
+
+
+        if ybala > 490 + h + 12:
+            ybala = 10
+            xbala = x
+
+
+        natela.append((x, vi, xbala, ybala))
+
+        if x < 0 and ybala >= 490 + h + 10:
+            natela.pop()
+
+    if len(natela) <= 1:
+        contador = 5
+        print("Oi")
+        while(contador >=0):
+            print("eeee")
+            x = random.randint(0, 700)
+            if  inimigos !=[]:
+                print("iiiii")
+                inimigos.pop()
+                vi = vi
+                xbala = x
+                ybala = 10
+                natela.append((x,vi,xbala,ybala))
+            contador -=1
+
+
+    print(natela)
+    if natela == [] and inimigos == []:
+        return (True,vidas)
+
+
+
+
+    return (False,vidas)
 
 
 
 
 
-
-
-    for i in inimigos:
-        x = random.randint(0, 700)
-        inimigos.pop()
-        vi = 2
-        natela.append((x,vi))
-
-    if natela == []:
-        return True
-
-
-
-
-    return False
-
-
-
-
-
-def jogoNave():
+def jogoNave(cor,w,h,fontePadrao,idade):
     continuar = True
     x = 400
     pressionadoR = False
@@ -91,6 +134,16 @@ def jogoNave():
     inimigos2 = list(range(0,10))
     fase3 = False
     inimigos3 = list(range(0,20))
+    vidas = idade + 1
+    auxiliar = 2
+
+    #Variaveis dos inimigos
+    wi = 100
+    hi = 20
+    cori = RGBrandom()
+    vi = 2
+    vbi = 1
+    numero = 1
 
 
     while(continuar):
@@ -148,7 +201,7 @@ def jogoNave():
             print("2",atirados_auxiliar)
 
             for pos in atirados_auxiliar:
-                bala = pygame.draw.circle(tela, RGBrandom(), pos, 10)
+                bala = pygame.draw.circle(tela, RGBrandom(), pos, w // 10)
                 yb = pos[1] - 10
                 xb = pos[0]
                 pos = (xb, yb)
@@ -171,26 +224,45 @@ def jogoNave():
             bala = pygame.draw.circle(tela, RGBrandom(), (xtiros,580), 10)
             xtiros -= 20
 
-        if (fase1):
+        resposta =fase(inimigos1,wi,hi,cori,atirados,w,h,x,vidas,vi,vbi)
+        vidas = resposta[1]
+        if resposta[0] == True:
+            inimigos1 = list(range(0,auxiliar * 5))
+            auxiliar += 1
+            wi -=10
+            hi -= 2
+            cori = RGBrandom()
+            vi += 2
+            vbi += 1
+            numero += 1
+            print("EEEEEIIIII")
 
-            fase2 =fase(inimigos1,100,20,(0,0,17),atirados)
+        numeroFase = str(numero)
+
+        faseN = "FASE:  " + numeroFase
+
+        if vidas < 1:
+            print("Game Over")
+            continuar = False
+
+        informarVidas = "Vidas: " + str(vidas)
+
+        fontePrincipaJ1 = pygame.font.SysFont("Verdana",25)
+        textFase = fontePadrao.render(informarVidas,True,(0,0,0))
+        tela.blit(textFase,(10,550))
+        textVidas = fontePrincipaJ1.render(faseN,True,(0,0,0))
+        textVidasW = textVidas.get_width()
+        tela.blit(textVidas,(400 - textVidasW//2,550))
+
+        bichinho2_1.bixo(x,490,w,h,cor,tela,rost)
 
 
-        if(fase2):
-            fase1 = False
-            print("fase2")
-            fase3 = fase(inimigos2,50,10,(0,0,0),atirados)
-
-        if(fase3):
-            fase2  = False
-            print()
-            fase(inimigos3,35,5,(3,255,127),atirados)
-
-
-
-        bichinho2_1.bixo(x,490,100,100,(255,235,2),tela,rost)
         pygame.display.update()
         clock.tick(60)
+    escolha4 = False
+    minigame = 0
+    return (escolha4,minigame)
+
 
 
 
