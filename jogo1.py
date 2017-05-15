@@ -10,6 +10,11 @@ def RGBrandom ():
 
     return (r,g,b)
 
+def horasEmSegundos():
+    horario = ((time.localtime().tm_hour - 3) * 3600) + (time.localtime().tm_min * 60) + time.localtime().tm_sec
+    return horario
+
+
 pygame.init()
 tela = pygame.display.set_mode([800,600])
 clock = pygame.time.Clock()
@@ -23,13 +28,14 @@ atingiu = False
 bala = 1
 
 
-def fase(inimigos,w,h,cor,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb):
+def fase(inimigos,w,h,cor,corbi,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb,tempoInicial):
 
 
     natela_a = natela.copy()
     natela.clear()
     global bala
     global atingiu
+
 
     for n,vi,xbala,ybala in natela_a:
 
@@ -51,8 +57,12 @@ def fase(inimigos,w,h,cor,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb):
             print("DEsenhou",w,h)
             inimigo1 = pygame.draw.rect(tela, cor, (x, 10, w, h))
 
-        tiro = pygame.draw.circle(tela,(0,0,0),(xbala,ybala + h),5)
-        ybala += vb
+        tempoExecucao = horasEmSegundos() - tempoInicial
+        if tempoExecucao >= 2:
+            corbi = RGBrandom()
+        if tempoExecucao >= 1:
+            tiro = pygame.draw.circle(tela,corbi,(xbala,ybala + h),5)
+            ybala += vb
 
 
 
@@ -87,20 +97,26 @@ def fase(inimigos,w,h,cor,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb):
         if x < 0 and ybala >= 490 + h + 10:
             natela.pop()
 
-    if len(natela) <= 1:
-        contador = 5
+    if True:
+        contador = 6
         print("Oi")
+
         while(contador >=0):
+
             print("eeee")
             x = random.randint(0, 700)
-            if  inimigos !=[]:
-                print("iiiii")
-                inimigos.pop()
-                vi = vi
-                xbala = x
-                ybala = 10
-                natela.append((x,vi,xbala,ybala))
+            tempoExecucao = horasEmSegundos()
+            if (tempoExecucao - tempoInicial) == 1:
+                if  inimigos !=[]:
+                    print("iiiii")
+                    inimigos.pop()
+                    vi = vi
+                    xbala = x
+                    ybala = 10
+                    natela.append((x,vi,xbala,ybala))
+
             contador -=1
+
 
 
     print(natela)
@@ -130,10 +146,6 @@ def jogoNave(cor,w,h,fontePadrao,idade):
     atirados_auxiliar = []
     fase1 = True
     inimigos1 = list(range(0, 5))
-    fase2 = False
-    inimigos2 = list(range(0,10))
-    fase3 = False
-    inimigos3 = list(range(0,20))
     vidas = idade + 1
     auxiliar = 2
 
@@ -141,10 +153,12 @@ def jogoNave(cor,w,h,fontePadrao,idade):
     wi = 100
     hi = 20
     cori = RGBrandom()
-    vi = 2
-    vbi = 1
+    vi = 4
+    vbi = 4
     numero = 1
 
+    corbi = RGBrandom()
+    tempoInicial = horasEmSegundos()
 
     while(continuar):
         tela.blit(fundo, (0, 0))
@@ -193,7 +207,6 @@ def jogoNave(cor,w,h,fontePadrao,idade):
                 atirados.append(pos)
                 balas -=1
                 novoTiro = False
-                print("0",atirados)
 
             atirados_auxiliar = atirados.copy()
             atirados.clear()
@@ -224,7 +237,7 @@ def jogoNave(cor,w,h,fontePadrao,idade):
             bala = pygame.draw.circle(tela, RGBrandom(), (xtiros,580), 10)
             xtiros -= 20
 
-        resposta =fase(inimigos1,wi,hi,cori,atirados,w,h,x,vidas,vi,vbi)
+        resposta =fase(inimigos1,wi,hi,cori,corbi,atirados,w,h,x,vidas,vi,vbi,tempoInicial)
         vidas = resposta[1]
         if resposta[0] == True:
             inimigos1 = list(range(0,auxiliar * 5))
@@ -235,6 +248,7 @@ def jogoNave(cor,w,h,fontePadrao,idade):
             vi += 2
             vbi += 1
             numero += 1
+            tempoInicial = horasEmSegundos()
             print("EEEEEIIIII")
 
         numeroFase = str(numero)
