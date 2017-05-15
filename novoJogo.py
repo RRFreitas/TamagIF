@@ -33,7 +33,7 @@ def newGAme(tela ,fontePrincipal,cores,rosto):
                 if (corOk):
                     xm =  pygame.mouse.get_pos()[0]
                     ym =  pygame.mouse.get_pos()[1]
-                    if (ym >= yc and ym <= yc + radio):
+                    if (ym >= yc - radio//2 and ym <= yc + radio//2):
                         if (xm >= xc - radio//2 and xm <= xc + radio // 2):
                             cor = cores["red"]
                             corOk = True
@@ -127,6 +127,7 @@ def newGAme(tela ,fontePrincipal,cores,rosto):
             bichinho2_1.bixo(xc + 150, yc,radio,radio,cores["green"],tela,rosto)
             bichinho2_1.bixo(xc + 300, yc,radio,radio,cores["blue"],tela,rosto)
 
+        """
             bt1 = pygame.draw.rect(tela,(255,0,0),(xc - 50,yc + radio + 10,100,25))
             bt2 = pygame.draw.rect(tela,(0,255,0),(xc + 100,yc + radio + 10, 100,25))
             bt3 = pygame.draw.rect(tela,(0,0,255),(xc + 250,yc + radio + 10,100,25))
@@ -136,7 +137,7 @@ def newGAme(tela ,fontePrincipal,cores,rosto):
             tela.blit(textBts,(210,312))
             tela.blit(textBts,(360,312))
             tela.blit(textBts,(510,312))
-
+        """
 
         pygame.display.update()
         clock.tick(60)
