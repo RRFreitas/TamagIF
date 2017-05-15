@@ -62,9 +62,9 @@ def iniciarBD(newBd, tela, fontePadrao, cores, rosto):
 
     print("--------------------")
     print("Seu Nome:", animal.getNome())
-    print("Sua Saúde:", animal.getSaude())
-    print("Fome:", animal.getFome())
-    print("Sua Idade:", animal.getIdade())
+    print("Sua Saúde:", animal.getSaude(50))
+    print("Fome:", animal.getFome(50))
+    print("Sua Idade:", animal.getIdade(50))
     print("--------------------")
 
 
@@ -106,13 +106,15 @@ class bichinho():
     def getCor(self):
         return self.cor
 
-    def getIdade(self):
-        if self.idade < 48:
+    def getIdade(self,idade):
+        print(self.idade)
+        if idade < 30:
             if ((horasEmSegundos() - self.auxiliarTempo) // 10) > 0:
                 self.idade =  self.idade + ((horasEmSegundos() - self.auxiliarTempo) // 10)
                 self.auxiliarTempo = horasEmSegundos()
-
         return self.idade
+
+
 
 
     def getNome(self):
@@ -121,27 +123,35 @@ class bichinho():
     # tempoSC -->> tempo Sem Comer4
 
     # TEMOS UM PROBLEMA AQUI ENVOLVENDO O BD
-    def getFome(self):
-        tempoSC = horasEmSegundos() - self.ultimaAlimentacao
-        fome = tempoSC // 5
+    def getFome(self,fomeAuxiliar):
+        if fomeAuxiliar > 0:
+            tempoSC = horasEmSegundos() - self.ultimaAlimentacao
+            fome = tempoSC // 5
 
-        if fome > 0:
-            self.fome = self.fome - fome
-            self.ultimaAlimentacao = horasEmSegundos()
-            print(self.fome)
+            if fome > 0:
+                self.fome = self.fome - fome
+                self.ultimaAlimentacao = horasEmSegundos()
+                print(self.fome)
+
+        else:
+            continuar = False
+            print("Game Over")
 
 
         return self.fome
 
-    def getSaude(self):
-        tempoSaude = horasEmSegundos() - self.ultimaMedicacao
-        saude = tempoSaude // 5
+    def getSaude(self,saudeAuxiliar):
+        if saudeAuxiliar > 0:
+            tempoSaude = horasEmSegundos() - self.ultimaMedicacao
+            saude = tempoSaude // 5
 
-        if saude > 0:
-            self.saude = self.saude - saude
-            self.ultimaMedicacao = horasEmSegundos()
+            if saude > 0:
+                self.saude = self.saude - saude
+                self.ultimaMedicacao = horasEmSegundos()
 
-
+        else:
+            continuar = False
+            print("Game Over")
 
         return self.saude
 
@@ -150,9 +160,9 @@ def Ver():
     print()
     print("--------------------")
     print("Seu Nome:", animal.getNome())
-    print("Sua Saúde:", animal.getSaude())
-    print("Fome:", animal.getFome())
-    print("Sua Idade:", animal.getIdade())
+    print("Sua Saúde:", animal.getSaude(100))
+    print("Fome:", animal.getFome(100))
+    print("Sua Idade:", animal.getIdade(50))
     print("--------------------")
     print()
 
@@ -187,18 +197,9 @@ def tamagif(newBd, tela, fontePadrao, cores, rosto):
         nome = animal.getNome()
         escolha = InterfaceTamagushy.janelaPrincipal(tela, rosto, fontePadrao, animal)
         # Eu havia retitado a escolha 2 e 3 , mas vou só vou retirar quando terinarmos de fazer isso na tela rincial
-        if (escolha[0] == 2):
-            Qcomida = float(input("Digite quantas comidas você vai dar a seu bichinho: "))
-            f = Qcomida
 
-        elif (escolha == 3):
-            Qremedio = int(input("Digite quantas pilulas você vai dar a seu bichinho: "))
-            s = animal.getSaude()
-            s = s + Qremedio
-            print(s)
-            animal.setSaude(s)
 
-        elif (escolha[0] == 4):
+        if (escolha[0] == 4):
             cor = escolha[5]
             minigame = escolha[6]
 
@@ -207,7 +208,7 @@ def tamagif(newBd, tela, fontePadrao, cores, rosto):
             w = h - (100 - escolha[4])
             print(w)
             if minigame == 1:
-                jogo1.jogoNave(cor,w,h)
+                jogo1.jogoNave(cor,w,h,fontePadrao,escolha[2])
 
 
             if minigame == 2:
@@ -221,14 +222,11 @@ def tamagif(newBd, tela, fontePadrao, cores, rosto):
 
             nome = escolha[1]
             continuar = False
-            cor = animal.getCor()
+            cor = escolha[5]
             r = cor[0]
             g = cor[1]
             b = cor[2]
-            print(nome)
-            print(escolha[1])
-            print(escolha[2])
-            print(animal.getFome)
+
             print(escolha[1], escolha[2], escolha[3], escolha[4], r, g, b)
 
             BDTamagushy.atualizarDados(escolha[1], escolha[2], escolha[3], escolha[4], r, g, b)
