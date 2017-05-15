@@ -33,10 +33,10 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
     sair = False
 
     nome = animal.getNome()
-    fome = animal.getFome()
-    saude = animal.getSaude()
-    idade = animal.getIdade()
-    cor = animal.getCor()
+    fome = animal.getFome(50)
+    saude = animal.getSaude(50)
+    idade = animal.getIdade(50)
+
 
 
 
@@ -214,11 +214,35 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
                             text = fonte.render(nome,True,(0,0,0))
 
 
-        fome = animal.getFome()
-        saude = animal.getSaude()
-        idade = animal.getIdade()
-        cor = animal.getCor()
+        fome = animal.getFome(fome)
+        saude = animal.getSaude(saude)
+        idade = animal.getIdade(idade)
+        corauxiliar = animal.getCor()
+        r = corauxiliar[0]
+        g = corauxiliar[1]
+        b = corauxiliar[2]
+        if (r == 255):
+            for n in range(0,(100 - saude)):
+                if g < 255.0:
+                    g += 2.5
+                if b < 255.0:
+                    b += 2.5
 
+        if (g == 255):
+            for n in range(0, (100 - saude)):
+                if r < 255.0:
+                    r += 2.5
+                if b < 255.0:
+                    b += 2.5
+
+        if (b == 255):
+            for n in range(0, (100 - saude)):
+                if r < 255.0:
+                    r += 2.5
+                if g < 255.0:
+                    g += 2.5
+
+        cor = (r,g,b)
 
         tela.blit(fundoPrincipal, (0, 0))
 
@@ -226,6 +250,7 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
         textNomeW = textNome.get_width()
         tela.blit(textNome,(400 - textNomeW//2,10))
 
+        h = ((idade // 2) * 10) + 50
         h = ((idade // 2) * 10) + 50
         w = h - (100 - fome)
 
@@ -322,10 +347,7 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
 
         pygame.display.update()
         clock.tick(60)
-    fome = animal.getFome()
-    saude = animal.getSaude()
-    idade = animal.getIdade()
-    cor = animal.getCor()
+
 
 
     return (escolha,nome,idade,fome,saude,cor,minigame)
