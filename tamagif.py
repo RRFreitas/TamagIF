@@ -91,6 +91,7 @@ class bichinho():
         fome = tempoSC // 5
         self.ultimaAlimentacao = horasEmSegundos()
         self.fome = self.fome - fome + f
+        return self.fome
 
     def setSaude(self, s):
         tempoSaude = horasEmSegundos() - self.ultimaMedicacao
@@ -100,6 +101,7 @@ class bichinho():
                 self.saude +=1
                 if self.saude == 100:
                     break
+        return self.saude
 
 
     # Retornadores
@@ -125,6 +127,7 @@ class bichinho():
     # TEMOS UM PROBLEMA AQUI ENVOLVENDO O BD
     def getFome(self,fomeAuxiliar):
         if fomeAuxiliar > 0:
+
             tempoSC = horasEmSegundos() - self.ultimaAlimentacao
             fome = tempoSC // 5
 
