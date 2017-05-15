@@ -8,6 +8,7 @@ def RGBrandom ():
     g = random.randint(1,255)
     b = random.randint(1,255)
 
+
     return (r,g,b)
 
 pygame.init()
@@ -20,6 +21,7 @@ fonte = pygame.font.SysFont("Segoe Script", 15)
 textoVida = fonte.render("Vida:", 1, (0,0,0))
 textoW = textoVida.get_width()
 textoPontos = fonte.render("Pontos: " + str(pontos), 1, (0,0,0))
+
 
 rost = pygame.image.load("imagens/rosto.png")
 fundo = pygame.image.load("imagens/fundoPrincipal.png")
@@ -49,6 +51,7 @@ def checkColision():
 
     for i in range(0, len(natela) - 1):
         if(natela[i][2] >= 600):
+
             pontos += 1
             natela.pop(i)
             return
@@ -108,7 +111,7 @@ def jogo2():
     pressionadoR = False
     pressionadoL = False
 
-    global continuar
+    continuar = True
 
     while (continuar):
         global execTime
@@ -148,5 +151,14 @@ def jogo2():
         update()
         pygame.display.update()
         clock.tick(60)
+
+    global pontos
+    global vidas
+
+    pontos = 0
+    vidas = 5
+    execTime = 0
+    x = 400
+
 
 #jogo2()
