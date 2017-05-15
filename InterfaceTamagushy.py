@@ -8,6 +8,9 @@ escolha = None
 pygame.font.init()
 fonte = pygame.font.SysFont("Segoe Script", 19)
 
+
+
+
 text1 = ("Alterar o"
          " nome")
 text2 = ("Dar"
@@ -84,6 +87,7 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
     minigame = 0
     comida = 0
     pilulas = 0
+
 
     while (continuar):
         idadeSTR = str(idade)
