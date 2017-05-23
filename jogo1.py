@@ -24,11 +24,12 @@ rost = pygame.image.load("imagens/rosto.png")
 fundo = pygame.image.load("imagens/fundoPrincipal.png")
 natela = []
 atingiu = False
+tempoAuxiliar = horasEmSegundos()
 
 bala = 1
 
 
-def fase(inimigos,w,h,cor,corbi,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb,tempoInicial):
+def fase(inimigos,w,h,cor,corbi,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb,tempoInicial,pontos):
 
 
     natela_a = natela.copy()
@@ -46,6 +47,7 @@ def fase(inimigos,w,h,cor,corbi,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb
 
         if (n >=0 and n <= 800 - w):
             vi = vi
+
 
         else:
             vi = -vi
@@ -75,8 +77,9 @@ def fase(inimigos,w,h,cor,corbi,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb
                     x =  - 100
 
 
-        if ybala >= 490 and ybala <= 490 + h:
+        if ybala >= 490 - h  and ybala <= 490 + h:
             if xbala >= xUsuario - wUsuario//2 and xbala <= xUsuario + wUsuario//2:
+                print("FOIii")
                 vidas -= 1
                 atingiu = True
 
@@ -87,7 +90,7 @@ def fase(inimigos,w,h,cor,corbi,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb
 
 
 
-        if ybala > 490 + h + 12:
+        if (x > 0 and ybala > 490 + h + 12):
             ybala = 10
             xbala = x
 
@@ -96,37 +99,39 @@ def fase(inimigos,w,h,cor,corbi,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb
 
         if x < 0 and ybala >= 490 + h + 10:
             natela.pop()
+            pontos +=1
 
-    if True:
+    if (len(natela) <= 6):
         contador = 6
-        print("Oi")
-
-        while(contador >=0):
-
-            print("eeee")
-            x = random.randint(0, 700)
-            tempoExecucao = horasEmSegundos()
-            if (tempoExecucao - tempoInicial) == 1:
-                if  inimigos !=[]:
-                    print("iiiii")
-                    inimigos.pop()
-                    vi = vi
-                    xbala = x
-                    ybala = 10
-                    natela.append((x,vi,xbala,ybala))
-
-            contador -=1
 
 
 
-    print(natela)
+
+        global tempoAuxiliar
+        x = random.randint(0, 700)
+        tempoExecucao = horasEmSegundos()
+        print(tempoAuxiliar,tempoExecucao,tempoExecucao-tempoAuxiliar)
+
+        if (tempoExecucao - tempoAuxiliar) >= 1:
+            if  inimigos !=[]:
+                inimigos.pop()
+                vi = vi
+                xbala = x
+                ybala = 10
+                tempoAuxiliar = horasEmSegundos()
+                natela.append((x,vi,xbala,ybala))
+
+
+
+
     if natela == [] and inimigos == []:
-        return (True,vidas)
+
+        return (True,vidas,pontos)
 
 
 
 
-    return (False,vidas)
+    return (False,vidas,pontos)
 
 
 
@@ -140,7 +145,7 @@ def jogoNave(cor,w,h,fontePadrao,idade):
     yb = 490
     xb = None
     novoTiro = False
-    balas = 5
+    balas = 3
     atirou = False
     atirados = []
     atirados_auxiliar = []
@@ -156,6 +161,7 @@ def jogoNave(cor,w,h,fontePadrao,idade):
     vi = 4
     vbi = 4
     numero = 1
+    pontos = 0
 
     corbi = RGBrandom()
     tempoInicial = horasEmSegundos()
@@ -237,8 +243,9 @@ def jogoNave(cor,w,h,fontePadrao,idade):
             bala = pygame.draw.circle(tela, RGBrandom(), (xtiros,580), 10)
             xtiros -= 20
 
-        resposta =fase(inimigos1,wi,hi,cori,corbi,atirados,w,h,x,vidas,vi,vbi,tempoInicial)
+        resposta =fase(inimigos1,wi,hi,cori,corbi,atirados,w,h,x,vidas,vi,vbi,tempoInicial,pontos)
         vidas = resposta[1]
+        pontos = resposta[2]
         if resposta[0] == True:
             inimigos1 = list(range(0,auxiliar * 5))
             auxiliar += 1
@@ -262,11 +269,15 @@ def jogoNave(cor,w,h,fontePadrao,idade):
         informarVidas = "Vidas: " + str(vidas)
 
         fontePrincipaJ1 = pygame.font.SysFont("Verdana",25)
+
+        textPontos = fontePrincipaJ1.render("pontos: " + str(pontos),True,(0,0,0))
+        tela.blit(textPontos, (30, 10))
         textFase = fontePadrao.render(informarVidas,True,(0,0,0))
         tela.blit(textFase,(10,550))
         textVidas = fontePrincipaJ1.render(faseN,True,(0,0,0))
         textVidasW = textVidas.get_width()
         tela.blit(textVidas,(400 - textVidasW//2,550))
+
 
         bichinho2_1.bixo(x,490,w,h,cor,tela,rost)
 
@@ -275,8 +286,4 @@ def jogoNave(cor,w,h,fontePadrao,idade):
         clock.tick(60)
     escolha4 = False
     minigame = 0
-    return (escolha4,minigame)
-
-
-
-
+    return pontos
