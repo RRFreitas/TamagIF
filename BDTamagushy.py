@@ -38,7 +38,10 @@ def criarBD():
     saude INTEGER NOT NULL,
     r INTEGER NOT NULL,
     g INTEGER NOT NULL,
-    b INTEGER NOT NULL
+    b INTEGER NOT NULL,
+    recordJG1 INTEGER NOT NULL,
+    recordJG2 INTEGER NOT NULL,
+    comidas INTEGER NOR NULL
 );
 """)
 
@@ -51,11 +54,11 @@ def ler_todos_clientes():
     return r.fetchall()
 
 #Adicionando informacoes
-def adicionarInformacoes(nome, idade, fome, saude,r,g,b):
+def adicionarInformacoes(nome, idade, fome, saude,r,g,b,recordJG1,recordJG2,comidas):
     cursor.execute("""
-        INSERT INTO dados(id,nome,idade,fome,saude,r,g,b)
-        VALUES (NULL,?,?,?,?,?,?,?)
-    """, (nome, idade, fome, saude,r,g,b))
+        INSERT INTO dados(id,nome,idade,fome,saude,r,g,b,recordJG1,recordJG2,comidas)
+        VALUES (NULL,?,?,?,?,?,?,?,?,?,?)
+    """, (nome, idade, fome, saude,r,g,b,recordJG1,recordJG2,comidas))
 
     dados.commit()
     print()
@@ -63,10 +66,17 @@ def adicionarInformacoes(nome, idade, fome, saude,r,g,b):
     print()
 
 #atualizando os dados
-def atualizarDados (nome,idade,fome,saude,r,g,b):
+def atualizarDados (nome,idade,fome,saude,r,g,b,recordJG1,recordJG2,comidas):
     cursor.execute("""
     UPDATE dados 
-    SET nome = ?,idade = ? , fome = ? , saude = ? , r = ? , g = ? , b = ?
-""",(nome,idade,fome,saude,r,g,b))
+    SET nome = ?,idade = ? , fome = ? , saude = ? , r = ? , g = ? , b = ? , recordJG1 = ? , recordJG2 = ? , comidas = ?
+""",(nome,idade,fome,saude,r,g,b,recordJG1,recordJG2,comidas))
 
     dados.commit()
+
+#DEletar bnco de dados
+def deletarDados ():
+    cursor.execute("""
+    DROP TABLE dados
+;
+""")
