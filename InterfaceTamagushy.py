@@ -88,6 +88,9 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
     comida = 0
     pilulas = 0
 
+    corf = (0,255,0)
+    cors = (0, 255, 0)
+
 
     while (continuar):
         idadeSTR = str(idade)
@@ -129,30 +132,32 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
                     y = pygame.mouse.get_pos()[1]
                     if y >= 330 and y <= 350:
                         if x >= (400 - w ) and x <= (400 - w) + 20:
-                            comida = comida + 1
+                            if comidas > 0:
+                                fome = animal.setFome(1)
+                                comidas = animal.getComidas(True)
 
-                        elif x >= (400 + w) and x <= (400 + w) + 20:
-                            comida = comida - 1
+
                     if y >= 300 + w and y <= 300 + w + 30:
                         if x >= 300 and x <= 500:
                             escolha2 = False
-                            fome = animal.setFome(comida)
-                            comida = 0
 
+
+
+
+                #Caso a opção escolhda seja mdicar verificar onde  clicou
                 if escolha3:
                     x = pygame.mouse.get_pos()[0]
                     y = pygame.mouse.get_pos()[1]
                     if y >= 330 and y <= 350:
                         if x >= (400 - w ) and x <= (400 - w) + 20:
-                            pilulas = pilulas + 1
+                            if pilulas > 0:
+                                saude = animal.setSaude(1)
+                                animal.getPilulas(True)
 
-                        elif x >= (400 + w) and x <= (400 + w) + 20:
-                            pilulas = pilulas - 1
                     if y >= 300 + w and y <= 300 + w + 30:
                         if x >= 300 and x <= 500:
                             escolha3 = False
-                            saude = animal.setSaude(pilulas)
-                            comida = 0
+                        
 
                 if escolha4:
                     x = pygame.mouse.get_pos()[0]
@@ -174,6 +179,8 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
             if (event.type == pygame.KEYDOWN):
 
                 if (escolha == 1):
+
+
                     press = pygame.key.get_pressed()
                     for i in range(0, len(press)):
                         #print(i)
@@ -217,14 +224,24 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
                                     txtAviso = fonte_aviso.render(aviso, True, (0, 0, 0))
                             text = fonte.render(nome,True,(0,0,0))
 
-
         fome = animal.getFome(fome)
         saude = animal.getSaude(saude)
         idade = animal.getIdade(idade)
+        recordJG1 = animal.getRecordJG1(0)
+        recordJG2 = animal.getRecordJG2(0)
+        comidas = animal.getComidas(False)
+        pilulas = animal.getPilulas(False)
         corauxiliar = animal.getCor()
         r = corauxiliar[0]
         g = corauxiliar[1]
         b = corauxiliar[2]
+
+        if (fome <= 0 or saude <= 0):
+            print("TESTE#$")
+            print("Game Over")
+            escolha = 6
+            continuar = False
+
         if (r == 255):
             for n in range(0,(100 - saude)):
                 if g < 255.0:
@@ -274,12 +291,33 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
         tela.blit(txtbt4,(642 + 75 - txtbt1W // 2, 200 + 25 - txtbt1H // 2))
 
         tela.blit(txtF,(9,539))
-        barraFome1 = pygame.draw.rect(tela,(255,255,255),(9 +txtFW ,539,102,22),1)
-        barraFome2 = pygame.draw.rect(tela, (0, 255, 0), (10 + txtFW, 540, fome, 20))
+
+        #Selecionando a cor da barra de fome e saude
+        if (fome >=75):
+            corf = (0,255,0)
+        elif (fome >= 50 and fome <=74):
+            corf = (255,215,0)
+        elif (fome >= 25 and fome <= 49):
+            corf = (255,140,0)
+        elif (fome >=0 and fome <= 24):
+            corf = (255,2,1)
+
+        if (saude >=75):
+            cors = (0,255,0)
+        elif (saude >= 50 and saude <=74):
+            cors = (255,215,0)
+        elif (saude >= 25 and saude <= 49):
+            cors = (255,140,0)
+        elif (saude >=0 and saude <= 24):
+            cors = (255,2,1)
+
+
+        barraFome1 = pygame.draw.rect(tela,(0,0,0),(9 +txtFW ,539,102,22),1)
+        barraFome2 = pygame.draw.rect(tela, corf, (10 + txtFW, 540, fome, 20))
 
         tela.blit(txtS,(300,539))
-        barraSaude1 = pygame.draw.rect(tela, (255, 255, 255), (300 + txtSW  , 539, 102, 22), 1)
-        barraSaude2 = pygame.draw.rect(tela, (0, 255, 0), (301 + txtSW  , 540, saude, 20))
+        barraSaude1 = pygame.draw.rect(tela, (0, 0, 0), (300 + txtSW  , 539, 102, 22), 1)
+        barraSaude2 = pygame.draw.rect(tela, cors, (301 + txtSW  , 540, saude, 20))
 
         tela.blit(txtI, (600, 539))
         idadeSTR = str(idade)
@@ -349,9 +387,10 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
             tela.blit(textMG2, ((100 - textMG2W // 2) + 580, 325 - textMG1H // 2))
 
 
+
         pygame.display.update()
         clock.tick(60)
 
 
 
-    return (escolha,nome,idade,fome,saude,cor,minigame)
+    return (escolha,nome,idade,fome,saude,cor,minigame,recordJG1,recordJG2,comidas)
