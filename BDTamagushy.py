@@ -41,7 +41,8 @@ def criarBD():
     b INTEGER NOT NULL,
     recordJG1 INTEGER NOT NULL,
     recordJG2 INTEGER NOT NULL,
-    comidas INTEGER NOR NULL
+    comidas INTEGER NOT NULL,
+    pilulas INTERGER NOT NULL
 );
 """)
 
@@ -54,11 +55,11 @@ def ler_todos_clientes():
     return r.fetchall()
 
 #Adicionando informacoes
-def adicionarInformacoes(nome, idade, fome, saude,r,g,b,recordJG1,recordJG2,comidas):
+def adicionarInformacoes(nome, idade, fome, saude,r,g,b,recordJG1,recordJG2,comidas,pilulas):
     cursor.execute("""
-        INSERT INTO dados(id,nome,idade,fome,saude,r,g,b,recordJG1,recordJG2,comidas)
-        VALUES (NULL,?,?,?,?,?,?,?,?,?,?)
-    """, (nome, idade, fome, saude,r,g,b,recordJG1,recordJG2,comidas))
+        INSERT INTO dados(id,nome,idade,fome,saude,r,g,b,recordJG1,recordJG2,comidas,pilulas)
+        VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?)
+    """, (nome, idade, fome, saude,r,g,b,recordJG1,recordJG2,comidas,pilulas))
 
     dados.commit()
     print()
@@ -66,11 +67,11 @@ def adicionarInformacoes(nome, idade, fome, saude,r,g,b,recordJG1,recordJG2,comi
     print()
 
 #atualizando os dados
-def atualizarDados (nome,idade,fome,saude,r,g,b,recordJG1,recordJG2,comidas):
+def atualizarDados (nome,idade,fome,saude,r,g,b,recordJG1,recordJG2,comidas,pilulas):
     cursor.execute("""
     UPDATE dados 
-    SET nome = ?,idade = ? , fome = ? , saude = ? , r = ? , g = ? , b = ? , recordJG1 = ? , recordJG2 = ? , comidas = ?
-""",(nome,idade,fome,saude,r,g,b,recordJG1,recordJG2,comidas))
+    SET nome = ?,idade = ? , fome = ? , saude = ? , r = ? , g = ? , b = ? , recordJG1 = ? , recordJG2 = ? , comidas = ? , pilulas = ?
+""",(nome,idade,fome,saude,r,g,b,recordJG1,recordJG2,comidas,pilulas))
 
     dados.commit()
 

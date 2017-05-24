@@ -35,7 +35,7 @@ def iniciarBD(newBd, tela, fontePadrao, cores, rosto):
         g = cor[1]
         b = cor[2]
         # adiciona as informações obtdas no Banco de dados
-        BDTamagushy.adicionarInformacoes(nome, 0, 100, 100, r, g, b)
+        BDTamagushy.adicionarInformacoes(nome, 0, 100, 100, r, g, b,0,0,5,5)
         # diz para o progama que não será presciso criar um novo bichinho, pois ja fio criado
         newBd = False
 
@@ -50,7 +50,7 @@ def iniciarBD(newBd, tela, fontePadrao, cores, rosto):
         r = cor[0]
         g = cor[1]
         b = cor[2]
-        BDTamagushy.atualizarDados(nome, 0, 100, 100, r, g, b)
+        BDTamagushy.atualizarDados(nome, 0, 100, 100, r, g, b,0,0,5,5)
 
     # ler os dados do banco de Dados !!!! ELE ESTÁ COM PROBLEMA, ELE NÃO IDENTIFICA NADA DENTRO DO BANCO DE DADOS!!!
     dadosT = BDTamagushy.ler_todos_clientes()
@@ -58,7 +58,7 @@ def iniciarBD(newBd, tela, fontePadrao, cores, rosto):
     print(dadosT)  # essa variavelfoi criado para eu ver se ele cria o banco de dados corretamento
 
     ajudinha = dadosT[linha]
-    animal = bichinho(dadosT[linha][1], dadosT[linha][2], dadosT[linha][3], dadosT[linha][4], dadosT[linha][5],dadosT[linha][6], dadosT[linha][7])
+    animal = bichinho(dadosT[linha][1], dadosT[linha][2], dadosT[linha][3], dadosT[linha][4], dadosT[linha][5],dadosT[linha][6], dadosT[linha][7],dadosT[linha][8],dadosT[linha][9],dadosT[linha][10],dadosT[linha][11])
 
     print("--------------------")
     print("Seu Nome:", animal.getNome())
@@ -70,12 +70,16 @@ def iniciarBD(newBd, tela, fontePadrao, cores, rosto):
 
 # Essa parte vocÊ sabe;)
 class bichinho():
-    def __init__(self, nome, idade, fome, saude, r, g, b):
+    def __init__(self, nome, idade, fome, saude, r, g, b,recordJG1,recordJG2,comidas,pilulas):
         self.nome = nome
         self.idade = idade
         self.fome = fome
         self.saude = saude
         self.cor = (r, g, b)
+        self.recordJG1 = recordJG1
+        self.recordJG2 = recordJG2
+        self.comidas = comidas
+        self.pilulas = pilulas
         self.nascimento = horasEmSegundos()
         self.ultimaAlimentacao = horasEmSegundos()
         self.ultimaMedicacao = horasEmSegundos()
@@ -102,6 +106,34 @@ class bichinho():
                 if self.saude == 100:
                     break
         return self.saude
+
+    def setComidas (self,c):
+        self.comidas += c
+        return  self.pilulas
+
+    def setPilulas (self,p):
+        self.pilulas += p
+        return self.pilulas
+
+    def getComidas(self,comeu):
+        if comeu:
+            self.comidas -= 1
+        return self.comidas
+
+    def getPilulas(self,medicou):
+        if medicou:
+            self.pilulas -= 1
+        return self.pilulas
+
+    def getRecordJG1(self,pontos):
+        if pontos > self.recordJG1:
+            self.recordJG1 = pontos
+        return self.recordJG1
+
+    def getRecordJG2(self,pontos):
+        if pontos > self.recordJG2:
+            self.recordJG2 = pontos
+        return self.recordJG2
 
 
     # Retornadores
@@ -159,17 +191,6 @@ class bichinho():
         return self.saude
 
 
-def Ver():
-    print()
-    print("--------------------")
-    print("Seu Nome:", animal.getNome())
-    print("Sua Saúde:", animal.getSaude(100))
-    print("Fome:", animal.getFome(100))
-    print("Sua Idade:", animal.getIdade(50))
-    print("--------------------")
-    print()
-
-
 def horasEmSegundos():
     horario = ((time.localtime().tm_hour - 3) * 3600) + (time.localtime().tm_min * 60) + time.localtime().tm_sec
     return horario
@@ -211,12 +232,14 @@ def tamagif(newBd, tela, fontePadrao, cores, rosto):
             w = h - (100 - escolha[4])
             print(w)
             if minigame == 1:
-                jogo1.jogoNave(cor,w,h,fontePadrao,escolha[2])
-
+                pontos = jogo1.jogoNave(cor,w,h,fontePadrao,escolha[2])
+                animal.getRecordJG1(pontos)
+                animal.setComidas(pontos//5)
 
             if minigame == 2:
-                print("oitef")
-                jogo2.jogo2()
+                pontos = jogo2.jogo2(w,h,cor)
+                animal.getRecordJG2(pontos)
+                animal.setPilulas(pontos)
 
 
         elif (escolha[0] == 5):
@@ -232,7 +255,16 @@ def tamagif(newBd, tela, fontePadrao, cores, rosto):
 
             print(escolha[1], escolha[2], escolha[3], escolha[4], r, g, b)
 
-            BDTamagushy.atualizarDados(escolha[1], escolha[2], escolha[3], escolha[4], r, g, b)
+            nome = escolha[1]
+            idade = escolha[2]
+            fome = escolha[3]
+            saude = escolha[4]
+            recordJG1 = escolha[7]
+            recordJG2 = escolha[8]
+            comidas = escolha[9]
+            pilulas = escolha[10]
+
+            BDTamagushy.atualizarDados(nome, idade, fome, saude, r, g, b,recordJG1,recordJG2,comidas,pilulas)
 
 
 executar = True

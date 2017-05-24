@@ -45,8 +45,7 @@ def drawPoly(type, x, y, color):
 def randomPolygon():
     return [random.randint(1, 3), random.randint(50, 750), 0, RGBrandom()]
 
-def checkColision():
-    global vidas
+def checkColision(vidas):
     global pontos
 
     for i in range(0, len(natela) - 1):
@@ -54,7 +53,7 @@ def checkColision():
 
             pontos += 1
             natela.pop(i)
-            return
+            return (vidas)
 
         if(natela[i][0] == 1): #Calcula colisão quadrado-círculo
             if(natela[i][1] < x - 50 < natela[i][1] + 50 or natela[i][1] < x + 50 < natela[i][1] + 50 or x - 50 < natela[i][1] < natela[i][1] + 50 < x + 50):
@@ -78,10 +77,12 @@ def checkColision():
                     if (vidas > 0):
                         vidas -= 1
                     natela.pop(i)
-def update():
+    return vidas
+
+
+def update(vidas,continuar):
     global tela
-    global vidas
-    global continuar
+
 
     if vidas == 0:
         continuar = False
@@ -105,11 +106,14 @@ def update():
     textoPontos = fonte.render("Pontos: " + str(pontos), 1, (0, 0, 0))
     tela.blit(textoPontos, (10, 10))
 
-    checkColision()
+    vidas = checkColision(vidas)
+    return (vidas,continuar)
 
-def jogo2():
+def jogo2(w,h,cor):
     pressionadoR = False
     pressionadoL = False
+    vidas = 5
+
 
     continuar = True
 
@@ -147,10 +151,15 @@ def jogo2():
             if (x + 10 <= 750):
                 x += 10 + execTime // 30
 
-        bichinho2_1.bixo(x, 490, 100, 100, (255, 235, 2), tela, rost)
-        update()
+        bichinho2_1.bixo(x, 490, w, h, cor, tela, rost)
+
+        auxiliar = update(vidas,continuar)
+        vidas = auxiliar[0]
+        continuar = auxiliar[1]
+
         pygame.display.update()
         clock.tick(60)
+
 
     global pontos
     global vidas
@@ -160,5 +169,6 @@ def jogo2():
     execTime = 0
     x = 400
 
+    return vidas
 
 #jogo2()

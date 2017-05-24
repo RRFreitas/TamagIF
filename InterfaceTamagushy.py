@@ -360,7 +360,6 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
             pilulasok = pygame.draw.rect(tela,(255,255,255),(300,300 + w,200,30))
             tela.blit(textS3,(350,300 + w))
             tela.blit(textS4,(400 - textS4W //2,320 + w))
-            print(pilulas)
 
         if escolha4:
             #MG = Minigames
