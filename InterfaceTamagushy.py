@@ -1,6 +1,5 @@
 import pygame
-import bichinho2_1
-
+import DrawTamagif
 
 fundoPrincipal = pygame.image.load("imagens/FundoPrincipal_azulClaro.png")
 clock = pygame.time.Clock()
@@ -8,23 +7,15 @@ escolha = None
 pygame.font.init()
 fonte = pygame.font.SysFont("Segoe Script", 19)
 
-
-
-
 text1 = ("Alterar o"
          " nome")
 text2 = ("Dar"
          " Comida")
-
 text3 = ("Dar"
          " Remedio")
-
 text4 = ("Mini Game")
-
 text5 = ("Fome")
-
 text6 = ("Saude")
-
 text7 = ("Idade :")
 
 
@@ -164,9 +155,6 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
                         if x >= 300 and x <= 500:
                             escolha2 = False
 
-
-
-
                 #Caso a opção escolhda seja mdicar verificar onde  clicou
                 if escolha3:
                     x = pygame.mouse.get_pos()[0]
@@ -180,7 +168,6 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
                     if y >= 300 + w and y <= 300 + w + 30:
                         if x >= 300 and x <= 500:
                             escolha3 = False
-                        
 
                 if escolha4:
                     x = pygame.mouse.get_pos()[0]
@@ -195,9 +182,6 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
                             escolha = 4
                             minigame = 2
                             continuar = False
-
-
-
 
             if (event.type == pygame.KEYDOWN):
 
@@ -255,8 +239,6 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
         comidas = animal.getComidas(False)
         pilulas = animal.getPilulas(False)
 
-
-
         if (fome <= 0 or saude <= 0):
             print("Game Over")
             escolha = 6
@@ -301,9 +283,7 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
         h = ((idade // 2) * 10) + 50
         w = h - (100 - fome)
 
-
-
-        bichinho2_1.bixo(400 ,320,w,h,cor,tela,rosto)
+        DrawTamagif.bixo(400, 320, w, h, cor, tela, rosto)
         bt1 = pygame.draw.rect(tela, (204, 255, 255), (10, 100, 150, 50))
         tela.blit(txtbt1,(12 +75 - txtbt1W // 2, 100 + 25 - txtbt1H //2 ))
 
@@ -337,7 +317,6 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
         elif (saude >=0 and saude <= 24):
             cors = (255,2,1)
 
-
         barraFome1 = pygame.draw.rect(tela,(0,0,0),(9 +txtFW ,539,102,22),1)
         barraFome2 = pygame.draw.rect(tela, corf, (10 + txtFW, 540, fome, 20))
 
@@ -349,7 +328,6 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
         idadeSTR = str(idade)
         idadetxt = fonte.render(idadeSTR,True,(0,0,0))
         tela.blit(idadetxt,(670,539))
-
 
         if escolha2:
 
@@ -394,24 +372,20 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
             textMG2W = textMG2.get_width()
             textMG2H = textMG2.get_height()
 
-
             #Titulo
             textJogos = fontePadrao.render("Mini Games",True,(0,0,0))
             textJogosW = textJogos.get_width()
             tela.blit(textJogos,(400 - textJogosW // 2,10))
 
-            #Desenhando butões
+            #Desenhando botões
             bt1 = pygame.draw.rect(tela,(0,0,255),(20,300,200,50))
             bt2 = pygame.draw.rect(tela,(0,0,255),(580,300,200,50))
 
-
-            #Digitando texto nos butoes
+            #Digitando texto nos botoes
             tela.blit(textMG1,((100 - textMG1W // 2) + 20, 325 - textMG1H // 2))
             tela.blit(textRJG1, ((100 - textMG1W // 2) + 20, 450))
             tela.blit(textMG2, ((100 - textMG2W // 2) + 580, 325 - textMG1H // 2))
             tela.blit(textRJG2, ((100 - textMG1W // 2) + 580, 450))
-
-
 
             if fome <= 0 or saude <= 0:
                 tela.fill(255,0,0)
@@ -424,7 +398,5 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
 
         pygame.display.update()
         clock.tick(60)
-
-
 
     return (escolha,nome,idade,fome,saude,cor,minigame,recordJG1,recordJG2,comidas,pilulas)

@@ -1,6 +1,6 @@
 import pygame
 import random
-import bichinho2_1
+import DrawTamagif
 
 
 
@@ -133,7 +133,7 @@ def menu ():
         x += vx
         y += vy
 
-        bichinho2_1.bixo(x, y, Bwidth, Bheight, corB, tela, rosto)
+        DrawTamagif.bixo(x, y, Bwidth, Bheight, corB, tela, rosto)
 
 
         #Butoes
