@@ -1,7 +1,7 @@
 import random
 import pygame
-import DrawTamagif
 import math
+from DrawTamagif import desenhar
 
 def RGBrandom ():
     r = random.randint(1,255)
@@ -156,7 +156,7 @@ def jogo2(w,h,cor):
             if (x + 10 <= 750):
                 x += 10 + execTime // 30
 
-        DrawTamagif.bixo(x, 490, w, h, cor, tela, rost)
+        desenhar(x, 490, w, h, cor, tela, rost)
 
         auxiliar = update(vidas,continuar)
         vidas = auxiliar[0]

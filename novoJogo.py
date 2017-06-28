@@ -1,5 +1,5 @@
 import pygame
-import DrawTamagif
+from DrawTamagif import desenhar
 
 fundoPrincipal = pygame.image.load("imagens/FundoPrincipal_azulClaro.png")
 clock = pygame.time.Clock()
@@ -11,7 +11,6 @@ def newGAme(tela ,fontePrincipal,cores,rosto):
     fundoPrincipal = pygame.image.load("imagens/FundoPrincipal_azulClaro.png")
     nome = ""
     text = fontePrincipal.render(nome, True, (0, 0, 0))
-    escrever = False
     destaque = pygame.font.SysFont("arial",35)
     text1 = destaque.render("Digite o nome do seu Tamagushy:",True,(0,0,0))
     nomeOk = False
@@ -55,22 +54,18 @@ def newGAme(tela ,fontePrincipal,cores,rosto):
                     corOk = True
                     press = pygame.key.get_pressed()
                     for i in range(0, len(press)):
-                        #print(i)
-                        #print(pygame.key.name(i))
                         if (press[i] == 1):
                             if (len(nome )== 12):
                                 if (i == 8):
                                     if (nome != ""):
                                         nome = list(nome)
-                                        #print(nome)
                                         nome.pop()
                                         nome = "".join(nome)
-                                        #print(nome)
 
                                 else:
                                     fonte_aviso = pygame.font.SysFont("arial", 25)
                                     aviso = "O nome do seu bichinho só pode ter no maximo 12 Caracteres :)"
-                                    txtAviso = fonte_aviso.render(aviso, True, (0, 0, 0))
+                                    fonte_aviso.render(aviso, True, (0, 0, 0))
                             else:
                                 if (i == 8):
                                     if (nome != ""):
@@ -92,15 +87,8 @@ def newGAme(tela ,fontePrincipal,cores,rosto):
                                 else:
                                     fonte_aviso = pygame.font.SysFont("arial", 25)
                                     aviso = "Só são permitidas letras;)"
-                                    txtAviso = fonte_aviso.render(aviso, True, (0, 0, 0))
+                                    fonte_aviso.render(aviso, True, (0, 0, 0))
                             text = fontePrincipal.render(nome,True,(0,0,0))
-
-
-
-
-
-
-
 
         text_width = text.get_width()
         text_height = text.get_height()
@@ -111,16 +99,16 @@ def newGAme(tela ,fontePrincipal,cores,rosto):
         tela.blit(text, (x, y))
         tela.blit(text1,(190,10))
 
-        caixa = pygame.draw.line(tela,(0,0,0),(x,y + text_height + 2), (x + text_width,y + text_height + 2 ))
+        pygame.draw.line(tela,(0,0,0),(x,y + text_height + 2), (x + text_width,y + text_height + 2 ))
         if (nomeOk):
             selecionarCor = fontePrincipal.render("Selecione a cor:",True,(0,0,0))
             tela.blit(selecionarCor,(300,y + text_height + 10))
             xc = 250
             yc = 250
             radio = 100
-            DrawTamagif.bixo(xc, yc, radio, radio, cores["red"], tela, rosto)
-            DrawTamagif.bixo(xc + 150, yc, radio, radio, cores["green"], tela, rosto)
-            DrawTamagif.bixo(xc + 300, yc, radio, radio, cores["blue"], tela, rosto)
+            desenhar(xc, yc, radio, radio, cores["red"], tela, rosto)
+            desenhar(xc + 150, yc, radio, radio, cores["green"], tela, rosto)
+            desenhar(xc + 300, yc, radio, radio, cores["blue"], tela, rosto)
 
         """
             bt1 = pygame.draw.rect(tela,(255,0,0),(xc - 50,yc + radio + 10,100,25))

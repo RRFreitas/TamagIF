@@ -1,4 +1,4 @@
-from Main import horasEmSegundos
+import time
 
 class Bichinho():
     def __init__(self, nome, idade, fome, saude, r, g, b,recordJG1,recordJG2,comidas,pilulas):
@@ -115,3 +115,7 @@ class Bichinho():
             print("Game Over")
 
         return self.saude
+
+def horasEmSegundos():
+    horario = ((time.localtime().tm_hour - 3) * 3600) + (time.localtime().tm_min * 60) + time.localtime().tm_sec
+    return horario

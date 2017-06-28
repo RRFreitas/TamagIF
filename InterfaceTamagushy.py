@@ -1,5 +1,5 @@
 import pygame
-import DrawTamagif
+from DrawTamagif import desenhar
 
 fundoPrincipal = pygame.image.load("imagens/FundoPrincipal_azulClaro.png")
 clock = pygame.time.Clock()
@@ -17,7 +17,6 @@ text4 = ("Mini Game")
 text5 = ("Fome")
 text6 = ("Saude")
 text7 = ("Idade :")
-
 
 def janelaPrincipal(tela,rosto,fontePadrao,animal):
     clock = pygame.time.Clock()
@@ -283,7 +282,7 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
         h = ((idade // 2) * 10) + 50
         w = h - (100 - fome)
 
-        DrawTamagif.bixo(400, 320, w, h, cor, tela, rosto)
+        desenhar(400, 320, w, h, cor, tela, rosto)
         bt1 = pygame.draw.rect(tela, (204, 255, 255), (10, 100, 150, 50))
         tela.blit(txtbt1,(12 +75 - txtbt1W // 2, 100 + 25 - txtbt1H //2 ))
 
