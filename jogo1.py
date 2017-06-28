@@ -1,6 +1,6 @@
 import random
 import pygame
-import bichinho2_1
+import DrawTamagif
 import time
 
 def RGBrandom ():
@@ -56,7 +56,6 @@ def fase(inimigos,w,h,cor,corbi,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb
         x = n + vi
 
         if x >= 0 and x <=800:
-            print("DEsenhou",w,h)
             inimigo1 = pygame.draw.rect(tela, cor, (x, 10, w, h))
 
         tempoExecucao = horasEmSegundos() - tempoInicial
@@ -73,14 +72,12 @@ def fase(inimigos,w,h,cor,corbi,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb
         for xb,yb in atirados:
             if (xb >= x  and xb <= x + w):
                 if (yb  >=  10 and yb <= 30  ):
-                    print("vai tirar")
                     x =  - 100
                     pontos +=1
 
 
         if ybala >= 490 - h  and ybala <= 490 + h:
             if xbala >= xUsuario - wUsuario//2 and xbala <= xUsuario + wUsuario//2:
-                print("FOIii")
                 vidas -= 1
                 atingiu = True
 
@@ -102,10 +99,6 @@ def fase(inimigos,w,h,cor,corbi,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb
             natela.pop()
 
     if (len(natela) <= 6):
-        contador = 6
-
-
-
 
         global tempoAuxiliar
         x = random.randint(0, 700)
@@ -113,29 +106,17 @@ def fase(inimigos,w,h,cor,corbi,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb
         print(tempoAuxiliar,tempoExecucao,tempoExecucao-tempoAuxiliar)
 
         if (tempoExecucao - tempoAuxiliar) >= 1:
-            if  inimigos !=[]:
+            if  inimigos != []:
                 inimigos.pop()
                 vi = vi
                 xbala = x
                 ybala = 10
                 tempoAuxiliar = horasEmSegundos()
                 natela.append((x,vi,xbala,ybala))
-
-
-
-
     if natela == [] and inimigos == []:
-
         return (True,vidas,pontos)
 
-
-
-
     return (False,vidas,pontos)
-
-
-
-
 
 def jogoNave(cor,w,h,fontePadrao,idade):
     continuar = True
@@ -279,7 +260,7 @@ def jogoNave(cor,w,h,fontePadrao,idade):
         tela.blit(textVidas,(400 - textVidasW//2,550))
 
 
-        bichinho2_1.bixo(x,490,w,h,cor,tela,rost)
+        DrawTamagif.bixo(x, 490, w, h, cor, tela, rost)
 
 
         pygame.display.update()

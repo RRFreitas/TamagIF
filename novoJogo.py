@@ -1,7 +1,5 @@
 import pygame
-import bichinho2_1
-
-
+import DrawTamagif
 
 fundoPrincipal = pygame.image.load("imagens/FundoPrincipal_azulClaro.png")
 clock = pygame.time.Clock()
@@ -53,9 +51,6 @@ def newGAme(tela ,fontePrincipal,cores,rosto):
 
             #Entrada do nome do tamagif
             elif (event.type == pygame.KEYDOWN):
-
-
-
                 if (nomeOk == False):
                     corOk = True
                     press = pygame.key.get_pressed()
@@ -123,9 +118,9 @@ def newGAme(tela ,fontePrincipal,cores,rosto):
             xc = 250
             yc = 250
             radio = 100
-            bichinho2_1.bixo(xc, yc,radio,radio,cores["red"],tela,rosto)
-            bichinho2_1.bixo(xc + 150, yc,radio,radio,cores["green"],tela,rosto)
-            bichinho2_1.bixo(xc + 300, yc,radio,radio,cores["blue"],tela,rosto)
+            DrawTamagif.bixo(xc, yc, radio, radio, cores["red"], tela, rosto)
+            DrawTamagif.bixo(xc + 150, yc, radio, radio, cores["green"], tela, rosto)
+            DrawTamagif.bixo(xc + 300, yc, radio, radio, cores["blue"], tela, rosto)
 
         """
             bt1 = pygame.draw.rect(tela,(255,0,0),(xc - 50,yc + radio + 10,100,25))

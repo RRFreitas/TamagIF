@@ -1,6 +1,6 @@
 import random
 import pygame
-import bichinho2_1
+import DrawTamagif
 import math
 
 def RGBrandom ():
@@ -156,7 +156,7 @@ def jogo2(w,h,cor):
             if (x + 10 <= 750):
                 x += 10 + execTime // 30
 
-        bichinho2_1.bixo(x, 490, w, h, cor, tela, rost)
+        DrawTamagif.bixo(x, 490, w, h, cor, tela, rost)
 
         auxiliar = update(vidas,continuar)
         vidas = auxiliar[0]
