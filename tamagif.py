@@ -57,15 +57,9 @@ def iniciarBD(newBd, tela, fontePadrao, cores, rosto):
     linha = 0
     print(dadosT)  # essa variavelfoi criado para eu ver se ele cria o banco de dados corretamento
 
-    ajudinha = dadosT[linha]
     animal = bichinho(dadosT[linha][1], dadosT[linha][2], dadosT[linha][3], dadosT[linha][4], dadosT[linha][5],dadosT[linha][6], dadosT[linha][7],dadosT[linha][8],dadosT[linha][9],dadosT[linha][10],dadosT[linha][11])
 
-    print("--------------------")
-    print("Seu Nome:", animal.getNome())
-    print("Sua Saúde:", animal.getSaude(50))
-    print("Fome:", animal.getFome(50))
-    print("Sua Idade:", animal.getIdade(50))
-    print("--------------------")
+
 
 
 # Essa parte vocÊ sabe;)
@@ -141,7 +135,6 @@ class bichinho():
         return self.cor
 
     def getIdade(self,idade):
-        print(self.idade)
         if idade < 30:
             if ((horasEmSegundos() - self.auxiliarTempo) // 10) > 0:
                 self.idade =  self.idade + ((horasEmSegundos() - self.auxiliarTempo) // 10)
@@ -234,10 +227,11 @@ def tamagif(newBd, tela, fontePadrao, cores, rosto):
             if minigame == 1:
                 pontos = jogo1.jogoNave(cor,w,h,fontePadrao,escolha[2])
                 animal.getRecordJG1(pontos)
-                animal.setComidas(pontos//5)
+                animal.setComidas(pontos)
 
             if minigame == 2:
                 pontos = jogo2.jogo2(w,h,cor)
+                print("EI",pontos)
                 animal.getRecordJG2(pontos)
                 animal.setPilulas(pontos)
 
@@ -263,8 +257,14 @@ def tamagif(newBd, tela, fontePadrao, cores, rosto):
             recordJG2 = escolha[8]
             comidas = escolha[9]
             pilulas = escolha[10]
+            print(r,g,b)
 
             BDTamagushy.atualizarDados(nome, idade, fome, saude, r, g, b,recordJG1,recordJG2,comidas,pilulas)
+
+
+        elif(escolha[0] == 6):
+            BDTamagushy.deletarDados()
+            continuar = False
 
 
 executar = True
@@ -277,7 +277,6 @@ while (executar):
     fontePadrao = respostaMenu[3]
     cores = respostaMenu[4]
     rosto = respostaMenu[5]
-    print("oi", respostaMenu)
 
     if (resposta == 1):
         tamagif(newBd, tela, fontePadrao, cores, rosto)

@@ -75,6 +75,7 @@ def fase(inimigos,w,h,cor,corbi,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb
                 if (yb  >=  10 and yb <= 30  ):
                     print("vai tirar")
                     x =  - 100
+                    pontos +=1
 
 
         if ybala >= 490 - h  and ybala <= 490 + h:
@@ -99,7 +100,6 @@ def fase(inimigos,w,h,cor,corbi,atirados,wUsuario,hUsusario,xUsuario,vidas,vi,vb
 
         if x < 0 and ybala >= 490 + h + 10:
             natela.pop()
-            pontos +=1
 
     if (len(natela) <= 6):
         contador = 6

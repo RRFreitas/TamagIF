@@ -92,6 +92,12 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
     cors = (0, 255, 0)
 
 
+    corPrincipal = animal.getCor()
+    r = corPrincipal[0]
+    g = corPrincipal[1]
+    b = corPrincipal[2]
+
+
     while (continuar):
         idadeSTR = str(idade)
         idadetxt = fonte.render(idadeSTR,True,(0,0,0))
@@ -111,10 +117,15 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
                     if (x >= 10 and x <= 160):
                         if (y >= 100 and y <= 150):
                             escolha = 1
+                            escolha2 = False
+                            escolha3 = False
+                            escolha4 = False
 
                         elif (y >= 200 and y <= 250):
                             escolha = 2
                             escolha2 = True
+                            escolha3 = False
+                            escolha4 = False
 
 
 
@@ -122,10 +133,22 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
                         if (y >= 100 and y <= 150):
                             escolha = 3
                             escolha3 = True
+                            escolha2 = False
+                            escolha4 = False
 
                         elif (y >= 200 and y <= 250):
                             escolha = 4
                             escolha4 = True
+                            escolha2 = False
+                            escolha3 = False
+
+                if escolha == 6:
+                    x = pygame.mouse.get_pos()[0]
+                    y = pygame.mouse.get_pos()[1]
+                    if x >=350 and x <= 450:
+                        if y >= 150 and y <= 170:
+                            continuar = False
+
 
                 if escolha2:
                     x = pygame.mouse.get_pos()[0]
@@ -231,18 +254,17 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
         recordJG2 = animal.getRecordJG2(0)
         comidas = animal.getComidas(False)
         pilulas = animal.getPilulas(False)
-        corauxiliar = animal.getCor()
-        r = corauxiliar[0]
-        g = corauxiliar[1]
-        b = corauxiliar[2]
+
+
 
         if (fome <= 0 or saude <= 0):
-            print("TESTE#$")
             print("Game Over")
             escolha = 6
             continuar = False
 
         if (r == 255):
+            g = 0
+            b = 0
             for n in range(0,(100 - saude)):
                 if g < 255.0:
                     g += 2.5
@@ -250,6 +272,8 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
                     b += 2.5
 
         if (g == 255):
+            r = 0
+            b = 0
             for n in range(0, (100 - saude)):
                 if r < 255.0:
                     r += 2.5
@@ -257,6 +281,8 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
                     b += 2.5
 
         if (b == 255):
+            r = 0
+            g = 0
             for n in range(0, (100 - saude)):
                 if r < 255.0:
                     r += 2.5
@@ -328,48 +354,46 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
         if escolha2:
 
             textF1 = fontePadrao.render("+",True,(0,0,0))
-            textF2 = fontePadrao.render("-", True, (0, 0, 0))
-            textF3 = fonte.render("Alimentar",True,(0,0,0))
+            textF3 = fonte.render("Ok",True,(0,0,0))
             #Quantidade de comidas
-            textF4 = fonte.render(str(comida),True,(0,0,0))
+            textF4 = fonte.render(str(comidas),True,(0,0,0))
             textF4W = textF4.get_width()
 
             mais = pygame.draw.rect(tela,(255,0,0),(400 - w  ,330 ,20,20))
             tela.blit(textF1,(400 - w + 2,319))
-            menos = pygame.draw.rect(tela,(255,255,0),(400 + w ,330,20,20))
-            tela.blit(textF2, (400 + w , 320))
             comidaok = pygame.draw.rect(tela,(255,255,255),(300,300 + w,200,30))
-            tela.blit(textF3,(350,300 + w))
             tela.blit(textF4,(400 - textF4W //2,330 + w))
+            tela.blit(textF3, (350, 300 + w))
             print(comida)
 
         #Dar Remedio
         if escolha3:
 
             textS1 = fontePadrao.render("+",True,(0,0,0))
-            textS2 = fontePadrao.render("-", True, (0, 0, 0))
-            textS3 = fonte.render("Medicar",True,(0,0,0))
+            textS3 = fonte.render("Ok",True,(0,0,0))
             #Quantidade de pilulas
             textS4 = fonte.render(str(pilulas),True,(0,0,0))
             textS4W = textS4.get_width()
 
             mais = pygame.draw.rect(tela,(255,0,0),(400 - w  ,337 ,20,20))
             tela.blit(textS1,(400 - w + 2,328))
-            menos = pygame.draw.rect(tela,(255,255,0),(400 + w ,330,20,20))
-            tela.blit(textS2, (400 + w , 328))
             pilulasok = pygame.draw.rect(tela,(255,255,255),(300,300 + w,200,30))
             tela.blit(textS3,(350,300 + w))
             tela.blit(textS4,(400 - textS4W //2,320 + w))
 
         if escolha4:
             #MG = Minigames
+
             tela.blit(fundoPrincipal,(0,0))
             textMG1 = fontePadrao.render("tiro ao alvo",True,(0,0,0))
+            textRJG1 = fontePadrao.render("Recorde: " + str(recordJG1),True ,(0,0,0))
             textMG1W = textMG1.get_width()
             textMG1H = textMG1.get_height()
             textMG2 = fontePadrao.render("Desviando",True,(0,0,0))
+            textRJG2 = fontePadrao.render("Recorde: " + str(recordJG2), True, (0, 0, 0))
             textMG2W = textMG2.get_width()
             textMG2H = textMG2.get_height()
+
 
             #Titulo
             textJogos = fontePadrao.render("Mini Games",True,(0,0,0))
@@ -383,13 +407,24 @@ def janelaPrincipal(tela,rosto,fontePadrao,animal):
 
             #Digitando texto nos butoes
             tela.blit(textMG1,((100 - textMG1W // 2) + 20, 325 - textMG1H // 2))
+            tela.blit(textRJG1, ((100 - textMG1W // 2) + 20, 450))
             tela.blit(textMG2, ((100 - textMG2W // 2) + 580, 325 - textMG1H // 2))
+            tela.blit(textRJG2, ((100 - textMG1W // 2) + 580, 450))
 
 
+
+            if fome <= 0 or saude <= 0:
+                tela.fill(255,0,0)
+                msg1 = fontePadrao.render("INFELIZMENTE O SEU TAMAGIF MORREU :(",True,(0,0,0))
+                msg2 = fontePadrao.render("TENTE NOVAMENTE; APERTE O BOTÂO OK",True,(0,0,0))
+                tela.blit(msg1,(350,100))
+                tela.blit(msg2,(350,150))
+                bt = pygame.draw.rect(tela,(255,255,255),(350,200,100,20),0)
+                continuar = False
 
         pygame.display.update()
         clock.tick(60)
 
 
 
-    return (escolha,nome,idade,fome,saude,cor,minigame,recordJG1,recordJG2,comidas)
+    return (escolha,nome,idade,fome,saude,cor,minigame,recordJG1,recordJG2,comidas,pilulas)

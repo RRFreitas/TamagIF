@@ -112,8 +112,13 @@ def update(vidas,continuar):
 def jogo2(w,h,cor):
     pressionadoR = False
     pressionadoL = False
-    vidas = 5
 
+    global pontos
+
+    pontos = 0
+    vidas = 5
+    execTime = 0
+    x = 400
 
     continuar = True
 
@@ -161,14 +166,8 @@ def jogo2(w,h,cor):
         clock.tick(60)
 
 
-    global pontos
-    global vidas
 
-    pontos = 0
-    vidas = 5
-    execTime = 0
-    x = 400
 
-    return vidas
+    return pontos
 
 #jogo2()
